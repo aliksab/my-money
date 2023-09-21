@@ -7,9 +7,8 @@ router
     .route('/')
     .get(auth, async (req, res) => {
         try {
-            const {orderBy, equalTo} = req.query
-            const list = Comment.find({[orderBy]: equalTo})
-            res.send(list)
+            const list = await Invoice.find()
+            res.status(200).send(list)
         } catch (e) {
             res.status(500).json({
                 message: 'На сервере произошла ошибкаю Попробуйте позже'
@@ -17,10 +16,11 @@ router
         }
     })
     .post(auth, async (req, res) => {
+        const userId = req.user
         try {
            const newInvoice = await Invoice.create({
-            ...req.body,
-            userId: req.user._id
+            userId: userId,
+            ...req.body            
            })
            res.status(201).send(newInvoice)
         } catch (e) {
@@ -31,21 +31,34 @@ router
     })
 
 
-router.delete('/invoiceId', auth, async (req, res) => {
-    try {
-        const { invoiceId } = req.params
-        const removedInvoice = await Invoice.findById(invoiceId)
-
-        if (removedInvoice.userId.toHexString() === req.user._id) {
-            await removedInvoice.remove()
-        } else {
-            res.status(401).json({message: 'Unauthorized'})
+router
+    .route('/:invoiceId')
+    .delete(auth, async (req, res) => {
+        try {
+            const { invoiceId } = req.params
+            const removedInvoice = await Invoice.findByIdAndDelete(invoiceId)
+            res.send(removedInvoice)
+        } catch (e) {
+            res.status(500).json({
+                message: 'На сервере произошла ошибкаю Попробуйте позже'
+            })
         }
-    } catch (e) {
-        res.status(500).json({
-            message: 'На сервере произошла ошибкаю Попробуйте позже'
-        })
-    }
-})
+    })
+    .patch(auth, async (req, res) => {
+        try {
+            const { invoiceId } = req.params
+            
+            if (invoiceId) {
+                const updatedInvoice = await Invoice.findByIdAndUpdate(invoiceId, req.body, {new: true})
+                res.send(updatedInvoice)
+            } else {
+                res.status(401).json({message: 'Unauthorized'})
+            }
+        } catch (e) {
+            res.status(500).json({
+                message: 'На сервере произошла ошибкаю Попробуйте позже'
+            })
+        }
+    })
 
 module.exports = router

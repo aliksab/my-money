@@ -32,7 +32,7 @@ class TokenService {
     }
     validateAccess(accessToken) {
         try {
-            return jwt.verify(accessToken, config.get('accessToken'))
+            return jwt.verify(accessToken, config.get('accessSecret'))
         } catch (e) {
             return null
         }

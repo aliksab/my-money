@@ -6,15 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { Windmill } from '@windmill/react-ui';
 import ThemedSuspense from './components/ThemedSuspense';
+import { SidebarProvider } from './components/context/SidebarContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
-      <Suspense fallback={<ThemedSuspense />}>
-      <Windmill usePreferences>
-        <App />
-      </Windmill>
-    </Suspense>
+      <SidebarProvider>
+        <Suspense fallback={<ThemedSuspense />}>
+          <Windmill usePreferences>
+            <App />
+          </Windmill>
+        </Suspense>
+      </SidebarProvider>
+      
     </BrowserRouter>
 );
 

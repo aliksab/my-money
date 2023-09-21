@@ -21,8 +21,9 @@ router.patch('/:userId', auth, async (req, res) => {
 })
 
 router.get( '/', auth, async (req, res) => {
+    const userId = req.user.id
     try {
-        const list = await User.find()
+        const list = await User.findById(userId)
         res.status(200).send(list)
     } catch (e) {
         res.status(500).json({

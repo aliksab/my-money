@@ -43,7 +43,7 @@ const Home = () => {
                 <Line {...lineOptions} />
                 <ChartLegend legends={lineLegends} />
             </ChartCard> */}
-            <div className="w-full flex content-around justify-around align-center">
+            <div className="w-full flex content-around justify-around align-center h-fit">
                 <ChartCard title="Диаграма состояния счёта">
                     <Bar {...barOptions} />
                     {/* <ChartLegend legends={barLegends} /> */}
