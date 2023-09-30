@@ -1,16 +1,15 @@
-export const lineLegends = [
-    { title: 'Organic', color: 'bg-teal-600' },
-    { title: 'Paid', color: 'bg-purple-600' },
-]
+import { useDispatch, useSelector } from "react-redux";
+import { chartDate } from "./displayDate"
+import { getInvoiceManipulations } from "../store/invoiceManipulation";
+import { getInvoices } from "../store/invoices";
 
-export const barLegends = [
-    { title: 'Доходы', color: 'bg-teal-600' },
-    { title: 'Расходы', color: 'bg-red-600' },
-  ]
+// const dispatch = useDispatch()
+// const manipulation = useSelector(getInvoiceManipulations())
+// const invoice = useSelector(getInvoices())
 
 export const lineOptions = {
     data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: chartDate(),
         datasets: [
         {
             label: 'Organic',
@@ -51,11 +50,11 @@ export const lineOptions = {
             display: true,
             scaleLabel: {
             display: true,
-            labelString: 'Month',
+            labelString: 'day',
             },
         },
         y: {
-            display: true,
+            display: false,
             scaleLabel: {
             display: true,
             labelString: 'Value',

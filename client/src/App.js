@@ -1,31 +1,23 @@
-import TradingViewWidget from "./pages/tradingview";
-import Home from "./pages/home";
-import { Route, Routes } from "react-router-dom";
-import MainPage from "./pages/MainPage";
-import Login from "./pages/Login";
-import EditUserPage from "./pages/EditUserPage";
-import SettingProfile from "./pages/SettingProfile";
-import Logbook from "./pages/Logbook"
-import Container from "./containers/Container";
+import AuthProvider from "./hooks/useAuth";
+import AppLoader from "./components/hoc/appLoader";
+import { useLocation, useRoutes } from "react-router-dom";
 import Header from "./components/Header";
+import routes from "./routes";
+import { getIsLoggedIn } from "./store/users";
+import { useSelector } from "react-redux";
 
 function App() {
+  const isLoggedIn = useSelector(getIsLoggedIn());
+  const location = useLocation();
+  const elements = useRoutes(routes(isLoggedIn, location));
   return (
     <>
-    <Header/>
-    <Container>
-      <Routes>
-        <Route path="" element={<MainPage/>} />
-        <Route path="login/:type?" element={<Login/>} />
-        <Route path="home/*">
-          <Route path="" element={<Home/>} />
-          <Route path="editProfile" element={<EditUserPage/>} />
-          <Route path="settingProfile" element={<SettingProfile/>} />
-          <Route path="logbook" element={<Logbook/>} />
-          <Route path="trading" element={<TradingViewWidget/>} />
-        </Route>
-      </Routes>
-    </Container>
+    <AppLoader>
+      <AuthProvider>
+        <Header/>
+          {elements}
+      </AuthProvider>
+    </AppLoader>
     </>
     
     

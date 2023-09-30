@@ -5,10 +5,9 @@ const auth = require('../middleware/auth.middlaware')
 
 
 router
-    .route('/:invoiceId')
+    .route('/')
     .get(auth, async (req, res) => {
         try {
-            const { invoiceId } = req.params
             const list = await InvoiceManipulation.find()
             res.status(200).send(list)
         } catch (e) {
@@ -19,12 +18,8 @@ router
     })
     .post(auth, async (req, res) => {
         try {
-            const { invoiceId } = req.params
-            const newManipulation = await InvoiceManipulation.create({
-            invoiceId: invoiceId,
-            ...req.body            
-           })
-           res.status(201).send(newManipulation)
+            const newManipulation = await InvoiceManipulation.create({...req.body })
+            res.status(201).send(newManipulation)
         } catch (e) {
             res.status(500).json({
                 message: 'На сервере произошла ошибкаю Попробуйте позже'
@@ -34,6 +29,17 @@ router
 
 router
     .route('/:manipulationId')
+    .delete(auth, async (req, res) => {
+        try {
+            const { manipulationId } = req.params
+            const removedManipulation = await InvoiceManipulation.findByIdAndDelete(manipulationId)
+            res.send(removedManipulation)
+        } catch (e) {
+            res.status(500).json({
+                message: 'На сервере произошла ошибкаю Попробуйте позже'
+            })
+        }
+    })
     .patch(auth, async (req, res) => {
         try {
             const { manipulationId } = req.params

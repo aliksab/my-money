@@ -19,8 +19,9 @@ router
         const userId = req.user
         try {
            const newInvoice = await Invoice.create({
-            userId: userId,
-            ...req.body            
+            ...req.body,
+            defaultAmount: req.body.amount,
+            userId: userId          
            })
            res.status(201).send(newInvoice)
         } catch (e) {

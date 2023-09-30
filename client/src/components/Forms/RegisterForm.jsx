@@ -1,12 +1,16 @@
 import { Input, Label } from "@windmill/react-ui";
 import { useEffect, useState } from "react";
-// import { useDispatch } from "react-redux";
-import { validator } from "../utils/validator";
-import TextInput from "./TextInput";
-import Button from "./Button";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../store/users";
+import { validator } from "../../utils/validator";
+import TextInput from "../TextInput";
+import Button from "../Button";
+import CheckBoxField from "../CheckField";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [data, setData] = useState({ });
     const [errors, SetErrors] = useState({});
     const handleChange = (target) => {
@@ -45,11 +49,6 @@ const RegisterForm = () => {
                 value: 8
             }
         },
-        profession: {
-            isRequired: {
-                message: "Обязательно выберите Вашу профессию"
-            }
-        },
         licence: {
             isRequired: {
                 message: "Вы не можете использовать сервис без лицензионного соглашения"
@@ -70,6 +69,8 @@ const RegisterForm = () => {
         const isValid = validate();
         if (!isValid) return;
         const newData = { ...data };
+        dispatch(signUp(newData));
+        navigate('/home')
         console.log(data);
     }
     return (
@@ -77,13 +78,20 @@ const RegisterForm = () => {
             <TextInput type="email" placeholder="john@doe.com" label={"Email"} name="email" value={data.email} onChange={handleChange} error={errors.email} />
             <TextInput placeholder="***************" type="password" label={"Пароль"} name="password" value={data.password} onChange={handleChange} error={errors.password} />
 
-              <Label className="mt-6" check>
+              {/* <Label className="mt-6" check>
                 <Input type="checkbox"  value={data.licence} onChange={handleChange} name="licence" error={errors.licence}/>
                 <span className="ml-2">
                   Подтвердить лицензионное соглашение
                 </span>
-              </Label>
-              <Button>Зарегистрироваться</Button>
+              </Label> */}
+            <CheckBoxField 
+                value={data.licence}
+                onChange={handleChange}
+                name="licence"
+            >
+                Согласие на обработку персональных данных
+            </CheckBoxField>
+            <Button>Зарегистрироваться</Button>
         </form>
     );
 }

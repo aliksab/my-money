@@ -1,22 +1,34 @@
+import { useEffect, useState } from "react";
 import Invoice from "./Invoice";
+import Pagination from "./pagination";
 
-const invoices = [
-    {
-        name: "invoice 1",
-        amount: 324
-    },
-    {
-        name: "invoice 2",
-        amount: 515
-    },{
-        name: "invoice 3",
-        amount: 12
+const InvoiceList = ({ invoices }) => {
+    const [pageTable, setPageTable] = useState(1)
+    const response = invoices.concat([])
+    const [dataTable, setDataTable] = useState([])
+    function onPageChangeTable(p) {
+        setPageTable(p)
     }
-]
-const InvoiceList = () => {
-    return invoices.map(invoice => (
-        <Invoice key={invoice.name} name={invoice.name} amount={invoice.amount} />
-    ))
+    useEffect(() => {
+        setDataTable(response.slice((pageTable - 1) * resultsPerPage, pageTable * resultsPerPage))
+      }, [pageTable])
+    const resultsPerPage = 3
+    const totalResults = invoices.length
+    return (
+        <>
+            {dataTable.map(invoice => (
+                <Invoice key={invoice._id} invoiceId={invoice._id} name={invoice.name} amount={invoice.amount} />
+            ))}
+            <div className='flex justify-center'>
+                <Pagination
+                    itemCount={totalResults}
+                    pageSize={resultsPerPage}
+                    currentPage={pageTable}
+                    onPageChange={onPageChangeTable}
+                />
+            </div>
+        </>
+    )
 }
  
 export default InvoiceList;

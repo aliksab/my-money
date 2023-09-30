@@ -7,9 +7,14 @@ import { BrowserRouter, Router } from 'react-router-dom';
 import { Windmill } from '@windmill/react-ui';
 import ThemedSuspense from './components/ThemedSuspense';
 import { SidebarProvider } from './components/context/SidebarContext';
+import { Provider } from 'react-redux';
+import { createStore } from "./store/createStore";
+
+const store = createStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <Provider store={store}>
     <BrowserRouter>
       <SidebarProvider>
         <Suspense fallback={<ThemedSuspense />}>
@@ -20,6 +25,8 @@ root.render(
       </SidebarProvider>
       
     </BrowserRouter>
+  </Provider>
+    
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -4,6 +4,7 @@ const schema = new Schema({
     type: {type: String, enum: ['debit', 'credit', 'investing']},
     name: {type: String},
     amount: {type: Number},
+    defaultAmount: {type: Number},
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true}
 }, {
     timestamps: true

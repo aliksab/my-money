@@ -15,7 +15,6 @@ module.exports = (req, res, next) => {
         if (!data) {
             return res.status(401).json({message: 'Unauthorized'})
         }
-        console.log(data);
         req.user = data
         next()
     } catch (e) {

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { unstable_HistoryRouter } from "react-router-dom";
-import TextInput from "./TextInput";
+import { useNavigate } from "react-router-dom";
+import TextInput from "../TextInput";
 import { Input, Label } from "@windmill/react-ui";
-import { validator } from "../utils/validator";
-import Button from "./Button";
-
-
+import { validator } from "../../utils/validator";
+import Button from "../Button";
+import { getAuthError, login } from "../../store/users";
+import CheckBoxField from "../CheckField";
 
 const LoginForm = () => {
     const [data, setData] = useState({
@@ -14,9 +14,9 @@ const LoginForm = () => {
         password: "",
         stayOn: false
     });
-    // const loginError = useSelector(getAuthError());
-    // const history = unstable_HistoryRouter();
-    // const dispatch = useDispatch();
+    const loginError = useSelector(getAuthError());
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const handleChange = (target) => {
         setData((prevState) => ({
@@ -51,23 +51,21 @@ const LoginForm = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        // const redirect = history.location.state
-        //     ? history.location.state.from.pathname
-        //     : "/";
-        console.log(data);
-        // dispatch(login({ payload: data, redirect }));
+        const redirect = navigate('/api')
+        dispatch(login({ payload: data, redirect }));
     };
     return (
         <form onSubmit={handleSubmit}>
             <TextInput type="email" placeholder="john@doe.com" label={"Email"} name="email" value={data.email} onChange={handleChange} error={errors.email} />
             <TextInput placeholder="***************" type="password" label={"Пароль"} name="password" value={data.password} onChange={handleChange} error={errors.password} />
-            <Label className="mt-6" check>
-                <Input type="checkbox" value={data.licence} onChange={handleChange} name="licence" error={errors.licence}/>
-                <span className="ml-2">
-                  Оставаться в системе
-                </span>
-              </Label>
-            {/* {loginError && <p className="text-danger">{loginError}</p>} */}
+            <CheckBoxField 
+                value={data.licence}
+                onChange={handleChange}
+                name="licence"
+            >
+                Оставаться в системе
+            </CheckBoxField>
+            {loginError && <p className="text-danger">{loginError}</p>}
             <Button>Вход</Button>
         </form>
     );
