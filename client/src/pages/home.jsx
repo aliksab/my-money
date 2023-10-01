@@ -1,34 +1,22 @@
-import { Doughnut, Line, Bar } from "react-chartjs-2";
-import Button from "../components/Button";
+import { Line } from "react-chartjs-2";
 import Card from "../components/Card";
-import Header from "../components/Header";
 import InfoCard from "../components/InfoCard";
-import InvoiceList from "../components/InvoiceList";
 import RoundIcon from "../components/RoundIcon";
-import { EditIcon, MoneyIcon } from '../icons'
+import { MoneyIcon } from '../icons'
 import ChartCard from '../components/Chart/ChartCard'
-import ChartLegend from '../components/Chart/ChartLegend'
-import { lineOptions, barOptions, lineLegends, barLegends, dataChart, dateManipulation } from "../utils/chart.js"
-import PageTitle from "../components/PageTitle";
-import Charts from "../components/Chart";
-import Modal from "../components/Modal";
+import {  dateManipulation } from "../utils/chart.js"
 import Invoices from "../components/Invoices";
 import { useSelector } from "react-redux";
-import { getCurrentUserId } from "../store/users";
-import { useParams } from "react-router-dom";
-import Modals from "../components/Modal";
 import InvoiceForm from "../components/Forms/InvoiceForm";
 import { getInvoices } from "../store/invoices";
-import { chartDate } from "../utils/displayDate";
-import Example from "../components/modalic";
 import SelectField from "../components/SelectField";
 import { useState } from "react";
 import { getInvoiceManipulations } from "../store/invoiceManipulation";
+import Modal from "../components/Modals";
 
 
 const Home = () => {
     const [data, setData] = useState({ });
-
     const invoices = useSelector(getInvoices());
     const invoicesList = invoices.map((i) => ({label: i.name, value: i._id}))
     const oneInvoice = invoices.filter(i => i._id === data.invoiceId)
@@ -38,8 +26,6 @@ const Home = () => {
     const balance = allAmount.reduce((sum, x) => sum + x, 0)
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
-        // console.log(dataChart(manipulationList));
-        
     };
     return (
         <div className="flex">
@@ -55,8 +41,7 @@ const Home = () => {
                     </InfoCard>
 
                     <Card>
-                        <Modals title="Создать счёт"><InvoiceForm/></Modals>
-                        <Example/>
+                        <Modal title="Создать счёт"><InvoiceForm/></Modal>
                         <Invoices />
                     </Card>
                 </div>

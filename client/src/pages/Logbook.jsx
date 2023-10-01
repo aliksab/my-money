@@ -5,32 +5,29 @@ import {
     TableCell,
     TableBody,
     TableRow,
-    TableFooter,
     TableContainer,
-    Badge,
-    Avatar,
-    Button,
   } from '@windmill/react-ui'
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUserId } from "../store/users";
-import { getInvoiceManipulations, loadInvoiceManipulationList, removeInvoiceManipulation } from "../store/invoiceManipulation";
+import { getInvoiceManipulations, removeInvoiceManipulation } from "../store/invoiceManipulation";
 import { useEffect, useState } from "react";
 import displayDate from "../utils/displayDate"
 import { getInvoices, updateInvoices } from "../store/invoices";
 import PageTitle from '../components/PageTitle';
 import InvoiceManipulationForm from '../components/Forms/InvoiceManipulationForm';
-import Modals from '../components/Modal';
 import UpdateManipulationForm from '../components/Forms/UpdateManipulationForm';
 import Pagination from '../components/pagination';
+import Modal from '../components/Modals';
 
 
 const Logbook = () => {
     const dispatch = useDispatch()
     const manipulation = useSelector(getInvoiceManipulations());
     const invoice = useSelector(getInvoices())
-    console.log(manipulation.length);
     const getInvoiceName = (invoiceId) => {
         const findName = invoice.filter(i => i._id === invoiceId)
+        if (findName.length === 0) {
+            return "Удаленный счет"
+        } 
         return findName[0].name 
     }
     const updateInvoice = (type, invoiceId, amount) => {
@@ -41,12 +38,21 @@ const Logbook = () => {
         const newData = { ...updatedInvoice[0], amount: newAmount }
         dispatch(updateInvoices(newData))
     }
+    const [pageTable, setPageTable] = useState(1)
     const handleDelete = (manipulationId, type, invoiceId, manipulateAmount) => {
         dispatch(removeInvoiceManipulation(manipulationId))
         updateInvoice(type, invoiceId, manipulateAmount)
+        if (manipulation.findIndex((manipulation) => manipulation._id === manipulationId) <= (pageTable - 1) * resultsPerPage) {
+            if ((manipulation.length - 1) <= (pageTable - 1) * resultsPerPage) {
+                setPageTable(pageTable - 1);
+            };
+        };
     }
-    const [pageTable, setPageTable] = useState(1)
     const response = manipulation.concat([])
+    useEffect(() =>{
+        setDataTable(response.slice((pageTable - 1) * resultsPerPage, pageTable * resultsPerPage))
+    }, [manipulation])
+    
     const [dataTable, setDataTable] = useState([])
     function onPageChangeTable(p) {
         setPageTable(p)
@@ -54,12 +60,14 @@ const Logbook = () => {
     useEffect(() => {
         setDataTable(response.slice((pageTable - 1) * resultsPerPage, pageTable * resultsPerPage))
       }, [pageTable])
+
     const resultsPerPage = 5
     const totalResults = manipulation.length
     return (
         <>
             <PageTitle>Журнал</PageTitle>
-            <Modals title="Добавить транзакцию"><InvoiceManipulationForm/></Modals>
+            <Modal title="Добавить транзакцию"><InvoiceManipulationForm/></Modal>
+
             <TableContainer className="mb-2">
                 <Table>
                 <TableHeader>
@@ -82,7 +90,7 @@ const Logbook = () => {
                            <TableCell><span className="text-sm">{trans.amount}</span></TableCell>
                            <TableCell>
                                 <div className="flex items-center space-x-4">
-                                <Modals icon={<EditIcon className="w-5 h-5" aria-hidden="true" />}><UpdateManipulationForm manipulationId={trans._id}/></Modals>
+                                <Modal icon={<EditIcon className="w-5 h-5" aria-hidden="true" />}><UpdateManipulationForm manipulationId={trans._id}/></Modal>
                                     <button size="icon" aria-label="Delete" onClick={() => handleDelete(trans._id, trans.type, trans.invoiceId, trans.amount)}>
                                     <TrashIcon className="w-5 h-5" aria-hidden="true" />
                                     </button>

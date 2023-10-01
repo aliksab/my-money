@@ -7,9 +7,10 @@ const auth = require('../middleware/auth.middlaware')
 router
     .route('/')
     .get(auth, async (req, res) => {
+        const userId = req.user._id
         try {
             const list = await InvoiceManipulation.find()
-            res.status(200).send(list)
+            res.status(200).send(list.filter(manipulation => manipulation.userId == userId))
         } catch (e) {
             res.status(500).json({
                 message: 'На сервере произошла ошибкаю Попробуйте позже'
@@ -17,8 +18,9 @@ router
         }
     })
     .post(auth, async (req, res) => {
+        const userId = req.user
         try {
-            const newManipulation = await InvoiceManipulation.create({...req.body })
+            const newManipulation = await InvoiceManipulation.create({...req.body, userId: userId })
             res.status(201).send(newManipulation)
         } catch (e) {
             res.status(500).json({

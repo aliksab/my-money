@@ -7,8 +7,8 @@ const invoiceService = {
         const { data } = await httpService.post(invoiceEndpoint, payload);
         return data;
     },
-    getInvoice: async () => {
-        const { data } = await httpService.get(invoiceEndpoint);
+    getInvoice: async (userId) => {
+        const { data } = await httpService.get(invoiceEndpoint, userId);
         return data;
     },
     removeInvoice: async (invoiceId) => {

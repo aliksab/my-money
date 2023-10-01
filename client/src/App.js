@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import routes from "./routes";
 import { getIsLoggedIn } from "./store/users";
 import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const isLoggedIn = useSelector(getIsLoggedIn());
@@ -18,6 +19,7 @@ function App() {
           {elements}
       </AuthProvider>
     </AppLoader>
+    <ToastContainer />
     </>
     
     

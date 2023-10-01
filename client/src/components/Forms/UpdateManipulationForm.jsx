@@ -4,7 +4,7 @@ import { getInvoices, updateInvoices } from "../../store/invoices";
 
 import SelectField from "../SelectField";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextInput from "../TextInput";
 import { validator } from "../../utils/validator";
 import Button from "../Button";
@@ -16,7 +16,6 @@ const UpdateManipulationForm = ({manipulationId}) => {
     const ManipulationList = useSelector(getInvoiceManipulations())
     const updatedManipulation = ManipulationList.filter(manipulation => manipulation._id === manipulationId)
     const [data, setData] = useState(updatedManipulation[0]);
-    console.log(data);
     const [errors, SetErrors] = useState({});
     const dispatch = useDispatch();
     const invoices = useSelector(getInvoices());
@@ -57,14 +56,14 @@ const UpdateManipulationForm = ({manipulationId}) => {
             },
         },
     };
-    useEffect(() => {
-        validate();
-    }, [data]);
-    const validate = () => {
-        const errors = validator(data, validatorConfig);
-        SetErrors(errors);
-        return Object.keys(errors).length === 0;
-    };
+    // useEffect(() => {
+    //     validate();
+    // }, [data]);
+    // const validate = () => {
+    //     const errors = validator(data, validatorConfig);
+    //     SetErrors(errors);
+    //     return Object.keys(errors).length === 0;
+    // };
     const updateInvoice = (amount) => {
         let newAmount = updatedInvoice[0].amount
         data.type === 'profit' ? newAmount += Number(amount) : newAmount -= Number(amount)
@@ -74,12 +73,11 @@ const UpdateManipulationForm = ({manipulationId}) => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        const isValid = validate();
-        if (!isValid) return;
+        // const isValid = validate();
+        // if (!isValid) return;
         updateInvoice(data.amount)
         const newData = { ...data };
         dispatch(updateInvoiceManipulation(newData));
-        console.log(newData);
     }
     return (
         !isLoading ? <>
@@ -90,7 +88,7 @@ const UpdateManipulationForm = ({manipulationId}) => {
                 {data.manipulation === 'profit' ? (
                     <>
                         <TextInput type="text" placeholder={data.amount} label={"Сумма дохода"} name="amount" value={data.amount} onChange={handleChange} error={errors.amount} />
-                        <SelectField label="Выберите счёт" name="invoiceId" options={invoicesList} onChange={handleChange} defaultOption={data.invoiceId} value={data.invoiceId} error={errors.invoiceId} />
+                        <SelectField label="Выберите счёт" name="invoiceId" options={invoicesList} onChange={handleChange} value={data.invoiceId} error={errors.invoiceId} />
                         <SelectField label="Выберите категорию" name="manipulation" options={data.type === "profit" ? profit : expense} onChange={handleChange} defaultOption={data.manipulation} value={data.manipulation} error={errors.manipulation} />
                         <TextInput type="text" placeholder={data.description} label={"Название"} name="description" value={data.description} onChange={handleChange} error={errors.description} />
                     </>
@@ -98,7 +96,7 @@ const UpdateManipulationForm = ({manipulationId}) => {
                 ) : (
                     <>
                         <TextInput type="text" placeholder={data.amount} label={"Сумма расхода"} name="amount" value={data.amount} onChange={handleChange} error={errors.amount} />
-                        <SelectField label="Выберите счёт" name="invoiceId" options={invoicesList} onChange={handleChange} defaultOption={data.invoiceId} value={data.invoiceId} error={errors.invoiceId} />
+                        <SelectField label="Выберите счёт" name="invoiceId" options={invoicesList} onChange={handleChange} value={data.invoiceId} error={errors.invoiceId} />
                         <SelectField label="Выберите категорию" name="manipulationExpense" options={data.type === "profit" ? profit : expense} onChange={handleChange} defaultOption={data.manipulation} value={data.manipulation} error={errors.manipulation} />
                         <TextInput type="text" placeholder={data.description} label={"Название"} name="description" value={data.description} onChange={handleChange} error={errors.description} />
                     </>

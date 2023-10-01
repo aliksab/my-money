@@ -5,7 +5,8 @@ const schema = new Schema({
     manipulation: {type: String, enum: ['bank', 'food', 'transport', 'game', 'sport']},
     description: {type: String},
     amount: {type: Number},
-    invoiceId: { type: Schema.Types.ObjectId, ref: 'Invoice', required: true}
+    invoiceId: { type: Schema.Types.ObjectId, ref: 'Invoice', required: true},
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true}
 }, {
     timestamps: true
 })

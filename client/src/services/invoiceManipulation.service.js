@@ -7,8 +7,8 @@ const invoiceManipulationService = {
         const { data } = await httpService.post(invoiceManipulationEndpoint, payload);
         return data;
     },
-    getInvoiceManipulation: async (payload) => {
-        const { data } = await httpService.get(invoiceManipulationEndpoint, payload);
+    getInvoiceManipulation: async (userId) => {
+        const { data } = await httpService.get(invoiceManipulationEndpoint, userId);
         return data;
     },
     removeInvoiceManipulation: async (id) => {

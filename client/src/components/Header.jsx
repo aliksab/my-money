@@ -1,16 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { SidebarContext } from './context/SidebarContext'
 import {
-  SearchIcon,
   MoonIcon,
   SunIcon,
-  BellIcon,
-  MenuIcon,
   OutlinePersonIcon,
-  OutlineCogIcon,
   OutlineLogoutIcon,
 } from '../icons'
-import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@windmill/react-ui'
+import { Dropdown, DropdownItem, WindmillContext } from '@windmill/react-ui'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import { useDispatch, useSelector } from "react-redux";
@@ -22,15 +18,10 @@ const Header = () => {
   const currentUser = useSelector(getCurrentUserData());
   const navigate = useNavigate();
   const isLoggedIn = useSelector(getIsLoggedIn())
-  console.log(isLoggedIn);
-  const { toggleSidebar } = useContext(SidebarContext)
-
-  const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false)
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
 
   function handleProfileClick() {
     setIsProfileMenuOpen(!isProfileMenuOpen)
-    console.log(isProfileMenuOpen);
   }
   const handleLogout = () => {
     dispath(logout())
@@ -38,7 +29,7 @@ const Header = () => {
   }
 
   return (
-    <header className="z-40 py-2 bg-white shadow-bottom dark:bg-gray-800">
+    <header className="py-2 bg-white shadow-bottom dark:bg-gray-800">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
         <div className="flex py-1 w-full text-gray-500 dark:text-gray-400">
           <div className='flex items-center'>

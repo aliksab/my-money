@@ -2,16 +2,16 @@ const express = require('express')
 const User = require('../models/User')
 const router = express.Router({ mergeParams: true })
 const auth = require('../middleware/auth.middlaware')
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: (_, __, cb) => {
-        cb(null, 'uploads');
-    },
-    filename: (_, file ,cb) => {
-        cb(null, file.originalname);
-    },
-});
-const upload = multer({ storage });
+// const multer = require('multer');
+// const storage = multer.diskStorage({
+//     destination: (_, __, cb) => {
+//         cb(null, 'uploads');
+//     },
+//     filename: (_, file ,cb) => {
+//         cb(null, file.originalname);
+//     },
+// });
+// const upload = multer({ storage });
 
 router.patch('/:userId', auth, async (req, res) => {
     try {
@@ -29,11 +29,11 @@ router.patch('/:userId', auth, async (req, res) => {
         })
     }
 })
-router.post('/upload', auth, upload.single('image'), (req, res) => {
-    res.json({
-        url: `/uploads/${req.file.originalname}`
-    });
-});
+// router.post('/upload', auth, upload.single('image'), (req, res) => {
+//     res.json({
+//         url: `/uploads/${req.file.originalname}`
+//     });
+// });
 
 router.get( '/', auth, async (req, res) => {
     const userId = req.user._id

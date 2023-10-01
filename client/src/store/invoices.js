@@ -66,7 +66,6 @@ export const createInvoices = (payload) => async (dispatch) => {
 };
 export const removeInvoices = (invoiceId) => async (dispatch) => {
     dispatch(deleteInvoicesRequested());
-    console.log(invoiceId);
     try {
         await invoiceService.removeInvoice(invoiceId);
         // dispatch(invoicesDelete(content));

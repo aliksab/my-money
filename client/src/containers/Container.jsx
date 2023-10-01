@@ -1,16 +1,9 @@
-
-import Header from '../components/Header'
-import Sidebar from '../components/Sidebar'
-import React, { useContext, Suspense, useEffect, lazy } from 'react'
-import { Switch, Route, Redirect, useLocation, Outlet } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react'
+import { useLocation, Outlet } from 'react-router-dom'
 import { SidebarContext } from '../components/context/SidebarContext'
 
 const Container = () => {
-  const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
-  let location = useLocation()
-  useEffect(() => {
-    closeSidebar()
-  }, [location])
+
   return (
     <>
       <div className="flex flex-col flex-1 w-full">

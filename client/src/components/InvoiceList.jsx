@@ -12,6 +12,11 @@ const InvoiceList = ({ invoices }) => {
     useEffect(() => {
         setDataTable(response.slice((pageTable - 1) * resultsPerPage, pageTable * resultsPerPage))
       }, [pageTable])
+    useEffect(() => {
+        if ((invoices.length - 1) <= (pageTable - 1) * resultsPerPage) {
+            setPageTable(pageTable - 1);
+        };
+    }, [invoices])
     const resultsPerPage = 3
     const totalResults = invoices.length
     return (

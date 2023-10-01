@@ -1,10 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
 import { chartDate } from "./displayDate"
-import { getInvoiceManipulations } from "../store/invoiceManipulation";
-import { getInvoices } from "../store/invoices";
-
-
-// const invoice = useSelector(getInvoices())
 
 export function dateManipulation (manipulation, invoice) {
   const dateManipulate = new Date().toLocaleDateString('ru')
@@ -33,16 +27,7 @@ export function dateManipulation (manipulation, invoice) {
     arrChart.push({date: arrDate[i-1], data: amount})
   }
 
-  // arrChart = arrChart.reverse()
-
-
-// export function dataChart (invoice) {
-//   invoice.map(i => {
-//     i.amount
-//   })
-// }
-
-let lineOptions = {}
+  let lineOptions = {}
   return lineOptions = {
     data: {
         labels: arrChart.reverse().map(d => d.date),

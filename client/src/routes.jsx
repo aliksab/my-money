@@ -14,7 +14,7 @@ import Container from "./containers/Container";
 
 const routes = (isLoggedIn, location) => [
     {
-        path: "/",
+        path: "",
         element: <MainPage />,
     },
     {

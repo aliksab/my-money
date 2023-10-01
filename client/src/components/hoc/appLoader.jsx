@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUserId, getIsLoggedIn, getUserById, getUsersLoadingStatus, loadUsersList } from "../../store/users";
+import { getCurrentUserId, getIsLoggedIn, getUsersLoadingStatus, loadUsersList } from "../../store/users";
 import { useEffect } from "react";
-import localStorageService, { getUserID } from "../../services/localStorage.service";
+import { getUserID } from "../../services/localStorage.service";
 import { loadInvoiceManipulationList } from "../../store/invoiceManipulation";
-import { loadInvoicesList } from "../../store/invoices";
+import { getInvoices, getInvoicesLoadingStatus, loadInvoicesList } from "../../store/invoices";
 
 const AppLoader = ({ children }) => {
    const dispatch = useDispatch();
@@ -19,8 +19,11 @@ const AppLoader = ({ children }) => {
        dispatch(loadInvoicesList(userId));
        dispatch(loadInvoiceManipulationList(userId));
    }, [userId])
+
+   const invoicesStatusLoading = useSelector(getInvoicesLoadingStatus())
+
    
-   if (usersStatusLoading) return "Loading";
+   if (usersStatusLoading && invoicesStatusLoading) return "Loading";
     return children;
 };
 

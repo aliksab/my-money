@@ -1,11 +1,7 @@
-import { Button, Card, CardBody } from '@windmill/react-ui'
-import { EditIcon, TrashIcon } from '../icons'
+import { Card, CardBody } from '@windmill/react-ui'
 
 
 const InfoCard = ({ id, title, value, icon, children }) => {
-    const handleClick = (e) => {
-        console.log(e);
-    }
     return (
         <Card>
             <CardBody className="flex items-center justify-between">

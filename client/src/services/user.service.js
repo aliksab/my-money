@@ -17,7 +17,6 @@ const userService = {
         return data;
     },
     post: async (payload) => {
-        console.log(payload);
         const { data } = await httpService.post(userEndpoint + 'upload', payload);
         return data;
     }

@@ -48,8 +48,8 @@ const LoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const isValid = validate();
-        if (!isValid) return;
+        // const isValid = validate();
+        // if (!isValid) return;
         const redirect = navigate('/api')
         dispatch(login({ payload: data, redirect }));
     };

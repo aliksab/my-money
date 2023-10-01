@@ -41,10 +41,10 @@ const deleteInvoiceManipulationRequested = createAction("invoiceManipulation/del
 const invoiceManipulationUpdateRequested = createAction("invoiceManipulation/invoiceManipulationUpdateRequested");
 const invoiceManipulationUpdateFailed = createAction("invoiceManipulation/invoiceManipulationUpdateFailed");
 
-export const loadInvoiceManipulationList = (userId) => async (dispatch) => {
+export const loadInvoiceManipulationList = (invoices) => async (dispatch) => {
     await dispatch(invoiceManipulationRequested());
     try {
-        const { content } = await invoiceManipulationService.getInvoiceManipulation(userId);
+        const { content } = await invoiceManipulationService.getInvoiceManipulation(invoices);
         dispatch(invoiceManipulationReceved(content));
     } catch (error) {
         dispatch(invoiceManipulationRequesFiled(error.message));
@@ -64,7 +64,6 @@ export const createInvoiceManipulation = (payload) => async (dispatch) => {
 };
 export const removeInvoiceManipulation = (invoiceManipulationId) => async (dispatch) => {
     dispatch(deleteInvoiceManipulationRequested());
-    console.log(invoiceManipulationId);
     try {
         await invoiceManipulationService.removeInvoiceManipulation(invoiceManipulationId);
         // dispatch(invoicesDelete(content));

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
-import { nanoid } from "nanoid";
 import { useSelector } from "react-redux";
 import { getCurrentUserId } from "../store/users";
 import invoiceService from "../services/invoice.service";
@@ -31,14 +30,6 @@ export const InvoicesProvider = ({ children }) => {
         const { message } = error.response.data;
         setError(message);
     }
-    // async function createInvoices(data) {
-    //     try {
-    //         const { content } = await invoiceService.createInvoice(comment);
-    //         setInvoices(prev => [...prev, content]);
-    //     } catch (error) {
-    //         errorCatcher(error);
-    //     }
-    // };
     async function getInvoice() {
         try {
             const { content } = await invoiceService.getInvoice(userId);

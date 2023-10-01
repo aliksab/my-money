@@ -6,9 +6,10 @@ const router = express.Router({ mergeParams: true })
 router
     .route('/')
     .get(auth, async (req, res) => {
+        const userId = req.user._id
         try {
             const list = await Invoice.find()
-            res.status(200).send(list)
+            res.status(200).send(list.filter(invoice => invoice.userId == userId))
         } catch (e) {
             res.status(500).json({
                 message: 'На сервере произошла ошибкаю Попробуйте позже'

@@ -76,7 +76,6 @@ const InvoiceManipulationForm = () => {
         const newData = { ...data };
         updateInvoice(data.amount)
         dispatch(createInvoiceManipulation(newData));
-        console.log(newData);
     }
     return (
         !isLoading ? <>
