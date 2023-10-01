@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:alpine
 
 WORKDIR /app/client
 
@@ -10,7 +10,7 @@ COPY client /app/client
 
 RUN npm run build
 
-FROM node:16
+FROM node:alpine
 
 WORKDIR /app
 
