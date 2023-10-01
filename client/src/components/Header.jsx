@@ -14,11 +14,12 @@ import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import { useDispatch, useSelector } from "react-redux";
-import { getIsLoggedIn, logout } from "../store/users";
+import { getCurrentUserData, getIsLoggedIn, logout } from "../store/users";
 
 const Header = () => {
   const { mode, toggleMode } = useContext(WindmillContext)
   const dispath = useDispatch();
+  const currentUser = useSelector(getCurrentUserData());
   const navigate = useNavigate();
   const isLoggedIn = useSelector(getIsLoggedIn())
   console.log(isLoggedIn);
@@ -69,7 +70,7 @@ const Header = () => {
         
             {/* <!-- Profile menu --> */}
 
-            {isLoggedIn ? (
+            {isLoggedIn && currentUser ? (
               <li className="relative">
                 <button
                 className="rounded-full focus:shadow-outline-purple focus:outline-none overflow-hidden w-1/3"
@@ -78,8 +79,8 @@ const Header = () => {
                 aria-haspopup="true"
                 >
                   <img
-                      className="align-middle rounded-full overflow-hidden"
-                      src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+                      className="h-auto max-w-full rounded-full"
+                      src={currentUser.image}
                       alt=""
                       aria-hidden="true"
                   />

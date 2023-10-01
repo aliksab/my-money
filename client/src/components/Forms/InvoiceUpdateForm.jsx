@@ -1,13 +1,10 @@
 import PageTitle from "../PageTitle";
-import { invoiceTypes } from "../../utils/invoiceTypes";
-import SelectField from "../SelectField";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TextInput from "../TextInput";
 import { validator } from "../../utils/validator";
 import Button from "../Button";
-import { createInvoices, getInvoices, loadInvoicesList, updateInvoices } from "../../store/invoices";
-import { getCurrentUserId } from "../../store/users";
+import { getInvoices, updateInvoices } from "../../store/invoices";
 
 const InvoiceUpdateForm = ({invoiceId}) => {
     const dispatch = useDispatch();
@@ -61,7 +58,6 @@ const InvoiceUpdateForm = ({invoiceId}) => {
         // if (!isValid) return;
         const newData = { ...data };
         dispatch(updateInvoices(newData));
-        console.log(newData);
     }
     return (
         <>  

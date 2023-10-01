@@ -13,9 +13,6 @@ const InvoiceForm = () => {
     const [data, setData] = useState({ });
     const [errors, SetErrors] = useState({});
     const invoiceList = invoiceTypes.map((invoice) => ({ label: invoice.label, value: invoice.name }));
-    const handleCreateInvoice = (data) => {
-        // dispatch(createInvoice({ ...data, pageId: userId }));
-    };
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };

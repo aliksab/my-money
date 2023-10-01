@@ -11,6 +11,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cors())
 app.use('/api', routes)
+app.use('/uploads', express.static('uploads'));
+
 
 
 const PORT = config.get('port') ?? 8080

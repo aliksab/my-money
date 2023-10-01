@@ -1,14 +1,14 @@
 import PageTitle from "../PageTitle";
 import { invoiceManipulationExpense, invoiceManipulationProfit, invoiceManipulationTypes } from "../../utils/invoiceTypes";
-import { createInvoices, getInvoices, getInvoicesLoadingStatus, loadInvoicesList, removeInvoices, updateInvoices } from "../../store/invoices";
+import { getInvoices, updateInvoices } from "../../store/invoices";
 
 import SelectField from "../SelectField";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TextInput from "../TextInput";
 import { validator } from "../../utils/validator";
 import Button from "../Button";
-import { createInvoiceManipulation, getInvoiceManipulations, getInvoiceManipulationsLoadingStatus, updateInvoiceManipulation } from "../../store/invoiceManipulation";
+import { getInvoiceManipulations, getInvoiceManipulationsLoadingStatus, updateInvoiceManipulation } from "../../store/invoiceManipulation";
 
 
 const UpdateManipulationForm = ({manipulationId}) => {
@@ -57,9 +57,9 @@ const UpdateManipulationForm = ({manipulationId}) => {
             },
         },
     };
-    // useEffect(() => {
-    //     validate();
-    // }, [data]);
+    useEffect(() => {
+        validate();
+    }, [data]);
     const validate = () => {
         const errors = validator(data, validatorConfig);
         SetErrors(errors);
@@ -74,9 +74,9 @@ const UpdateManipulationForm = ({manipulationId}) => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const isValid = validate();
-        // if (!isValid) return;
-        // updateInvoice(data.amount)
+        const isValid = validate();
+        if (!isValid) return;
+        updateInvoice(data.amount)
         const newData = { ...data };
         dispatch(updateInvoiceManipulation(newData));
         console.log(newData);
@@ -85,16 +85,7 @@ const UpdateManipulationForm = ({manipulationId}) => {
         !isLoading ? <>
             <form onSubmit={handleSubmit}>
                 <PageTitle>Изменить транзакцию</PageTitle>
-                {/* <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
-                <ul className="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
-                    <li className="mr-2" role="presentation">
-                        <button className="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Доход</button>
-                    </li>
-                    <li className="mr-2" role="presentation">
-                        <button className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Расход</button>
-                    </li>
-                </ul>
-            </div> */}
+
                 <SelectField label="Выбери тип транзакции" name="type" options={manipulationTypesList} onChange={handleChange} value={data.type} error={errors.type} /> 
                 {data.manipulation === 'profit' ? (
                     <>

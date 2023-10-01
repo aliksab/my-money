@@ -3,35 +3,60 @@ import { chartDate } from "./displayDate"
 import { getInvoiceManipulations } from "../store/invoiceManipulation";
 import { getInvoices } from "../store/invoices";
 
-// const dispatch = useDispatch()
-// const manipulation = useSelector(getInvoiceManipulations())
+
 // const invoice = useSelector(getInvoices())
 
-export const lineOptions = {
+export function dateManipulation (manipulation, invoice) {
+  const dateManipulate = new Date().toLocaleDateString('ru')
+  const arrDate = chartDate()
+  let amount = Number(invoice.map(i => i.amount))
+  const manList = []
+  const arrChart = []
+  for (let i=0; i<arrDate.length; i++) {
+    manipulation.map(m => {
+      if (new Date(m.createdAt).toLocaleDateString('ru') === arrDate[i]){
+        manList.push({date: arrDate[i], amount: m.amount, type: m.type})
+      }
+    })
+  }
+  
+  for (let i=arrDate.length; i>0; i--) {
+    manList.filter(oper => {
+      if (oper.date === arrDate[i]) {
+        if (oper.type === 'profit') {
+          amount -= oper.amount
+        } else {
+          amount += oper.amount
+        }
+      }
+    })
+    arrChart.push({date: arrDate[i-1], data: amount})
+  }
+
+  // arrChart = arrChart.reverse()
+
+
+// export function dataChart (invoice) {
+//   invoice.map(i => {
+//     i.amount
+//   })
+// }
+
+let lineOptions = {}
+  return lineOptions = {
     data: {
-        labels: chartDate(),
+        labels: arrChart.reverse().map(d => d.date),
         datasets: [
         {
-            label: 'Organic',
+            label: "Скрыть линию",
             /**
              * These colors come from Tailwind CSS palette
              * https://tailwindcss.com/docs/customizing-colors/#default-color-palette
              */
             backgroundColor: '#0694a2',
             borderColor: '#0694a2',
-            data: [43, 48, 40, 54, 67, 73, 70],
+            data: arrChart.map(a => a.data),
             fill: false,
-        },
-        {
-            label: 'Paid',
-            fill: false,
-            /**
-             * These colors come from Tailwind CSS palette
-             * https://tailwindcss.com/docs/customizing-colors/#default-color-palette
-             */
-            backgroundColor: '#7e3af2',
-            borderColor: '#7e3af2',
-            data: [24, 50, 64, 74, 52, 51, 65],
         },
         ],
     },
@@ -54,7 +79,7 @@ export const lineOptions = {
             },
         },
         y: {
-            display: false,
+            display: true,
             scaleLabel: {
             display: true,
             labelString: 'Value',
@@ -65,6 +90,7 @@ export const lineOptions = {
     legend: {
         display: false,
     },
+  }
 }
 
 export const barOptions = {

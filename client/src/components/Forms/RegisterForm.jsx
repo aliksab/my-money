@@ -1,4 +1,3 @@
-import { Input, Label } from "@windmill/react-ui";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../store/users";
@@ -78,12 +77,6 @@ const RegisterForm = () => {
             <TextInput type="email" placeholder="john@doe.com" label={"Email"} name="email" value={data.email} onChange={handleChange} error={errors.email} />
             <TextInput placeholder="***************" type="password" label={"Пароль"} name="password" value={data.password} onChange={handleChange} error={errors.password} />
 
-              {/* <Label className="mt-6" check>
-                <Input type="checkbox"  value={data.licence} onChange={handleChange} name="licence" error={errors.licence}/>
-                <span className="ml-2">
-                  Подтвердить лицензионное соглашение
-                </span>
-              </Label> */}
             <CheckBoxField 
                 value={data.licence}
                 onChange={handleChange}

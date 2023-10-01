@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getCurrentUserData, getCurrentUserId, updateUser } from "../store/users";
 import { validator } from "../utils/validator";
+import { Input } from "@windmill/react-ui";
+import httpService from "../services/http.service";
+import userService from "../services/user.service";
 
 const EditUserPage = () => {
     const dispatch = useDispatch();
-    const userId = useSelector(getCurrentUserId());
     const currentUser = useSelector(getCurrentUserData());
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState({});
@@ -27,7 +29,25 @@ const EditUserPage = () => {
   
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
+        console.log(data);
     };
+    const handleChangeFile = async (e) => {
+        console.log(e.target.files[0].name);
+        try {
+            const formData = new FormData();
+            const file = e.target.files[0];
+            formData.append('image', file);
+            // const {data} = await userService.post(formData)
+            // setData((prev) => ({ ...prev, [data.image]: e.target.files[0] }));
+            console.log(formData);
+    //   const file = event.target.files[0];
+    //   formData.append('image', file);
+    //   const { data } = await axios.post('/upload', formData);
+    //   setImageUrl(data.url);
+        } catch (error) {
+            
+        }
+    }
     const validatorConfig = {
         email: {
             isRequired: {
@@ -110,7 +130,24 @@ const EditUserPage = () => {
                 <PageTitle>Мой аккаунт</PageTitle>
                 <div className="flex">
                     <div className="w-1/4 m-auto cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
-                        <img className="rounded" src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"/>
+                    {/* <img className="rounded" src={data.image} value={data.image}/> */}
+                    <button value={data.image} type="file" placeholder={data.image}>
+                        {/* <img className="rounded" src={data.image} />s */}
+                        <label for="user_avatar" value={data.image}><img className="rounded" src={data.image} /></label>
+                        <input type="file" className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" onChange={handleChangeFile} name={data.image}/>
+                    </button>
+                    
+                    {/* <input
+                    type="file"
+                    value={data.image}
+                    onChange={handleChange}
+                    className="text-sm text-stone-500
+                    file:mr-5 file:py-1 file:px-3 file:border-[1px]
+                    file:text-xs file:font-medium
+                    file:bg-stone-50 file:text-stone-700
+                    hover:file:cursor-pointer hover:file:bg-blue-50
+                    hover:file:text-blue-700"
+                    /> */}
                     </div>
                     <div className="mx-4 w-full">
                     <div className="flex flex-col justify-between gap-2 h-fit">

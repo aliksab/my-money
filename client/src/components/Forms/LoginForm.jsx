@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import TextInput from "../TextInput";
-import { Input, Label } from "@windmill/react-ui";
 import { validator } from "../../utils/validator";
 import Button from "../Button";
 import { getAuthError, login } from "../../store/users";

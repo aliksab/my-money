@@ -6,7 +6,6 @@ const userEndpoint = "user/";
 const userService = {
     get: async (payload) => {
         const { data } = await httpService.get(userEndpoint, payload);
-        console.log("data", data);
         return data;
     },
     create: async (payload) => {
@@ -15,6 +14,11 @@ const userService = {
     },
     update: async (payload) => {
         const { data } = await httpService.patch(userEndpoint + localStorageService.getUserID(), payload);
+        return data;
+    },
+    post: async (payload) => {
+        console.log(payload);
+        const { data } = await httpService.post(userEndpoint + 'upload', payload);
         return data;
     }
 };
