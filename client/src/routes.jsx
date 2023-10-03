@@ -3,7 +3,7 @@ import MainPage from "./pages/MainPage";
 import Login from "./pages/Login";
 import RegisterForm from "./components/Forms/RegisterForm";
 import LoginForm from "./components/Forms/LoginForm";
-import Home from "./pages/Home";
+import Home from "./pages/home";
 import Logbook from "./pages/Logbook";
 import TradingViewWidget from "./pages/tradingview";
 import EditUserPage from "./pages/EditUserPage";

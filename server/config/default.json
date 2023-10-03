@@ -2,5 +2,6 @@
     "port": 8080,
     "mongoUri": "mongodb+srv://aliksab-my-money:Savich01@cluster0.n4zp4by.mongodb.net/?retryWrites=true&w=majority",
     "accessSecret": "super secret from backend",
-    "refreshSecret": "super refresh key"
+    "refreshSecret": "super refresh key",
+    "tgApiToken": "6614426519:AAGUZt4NX4RBHkT-IWhlVaIxNmrLOVFvKmc"
 }

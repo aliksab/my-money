@@ -16,7 +16,7 @@ import PageTitle from '../components/PageTitle';
 import InvoiceManipulationForm from '../components/Forms/InvoiceManipulationForm';
 import UpdateManipulationForm from '../components/Forms/UpdateManipulationForm';
 import Pagination from '../components/pagination';
-import Modal from '../components/Modals';
+import MyModal from '../components/Modal';
 
 
 const Logbook = () => {
@@ -66,7 +66,7 @@ const Logbook = () => {
     return (
         <>
             <PageTitle>Журнал</PageTitle>
-            <Modal title="Добавить транзакцию"><InvoiceManipulationForm/></Modal>
+            <MyModal title="Добавить транзакцию"><InvoiceManipulationForm/></MyModal>
 
             <TableContainer className="mb-2">
                 <Table>
@@ -90,7 +90,7 @@ const Logbook = () => {
                            <TableCell><span className="text-sm">{trans.amount}</span></TableCell>
                            <TableCell>
                                 <div className="flex items-center space-x-4">
-                                <Modal icon={<EditIcon className="w-5 h-5" aria-hidden="true" />}><UpdateManipulationForm manipulationId={trans._id}/></Modal>
+                                <MyModal icon={<EditIcon className="w-5 h-5" aria-hidden="true" />}><UpdateManipulationForm manipulationId={trans._id}/></MyModal>
                                     <button size="icon" aria-label="Delete" onClick={() => handleDelete(trans._id, trans.type, trans.invoiceId, trans.amount)}>
                                     <TrashIcon className="w-5 h-5" aria-hidden="true" />
                                     </button>

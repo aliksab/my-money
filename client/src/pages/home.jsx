@@ -12,7 +12,7 @@ import { getInvoices } from "../store/invoices";
 import SelectField from "../components/SelectField";
 import { useState } from "react";
 import { getInvoiceManipulations } from "../store/invoiceManipulation";
-import Modal from "../components/Modals";
+import MyModal from "../components/Modal";
 
 
 const Home = () => {
@@ -41,7 +41,7 @@ const Home = () => {
                     </InfoCard>
 
                     <Card>
-                        <Modal title="Создать счёт"><InvoiceForm/></Modal>
+                        <MyModal title="Создать счёт"><InvoiceForm/></MyModal>
                         <Invoices />
                     </Card>
                 </div>
