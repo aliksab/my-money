@@ -31,7 +31,7 @@ const Header = () => {
   return (
     <header className="py-2 bg-white shadow-bottom dark:bg-gray-800">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
-        <div className="flex py-1 w-full text-gray-500 dark:text-gray-400">
+        <div className="flex py-1 w-screen overflow-hidden text-gray-500 dark:text-gray-400 md:overflow-visible">
           <div className='flex items-center'>
             <NavLink className="self-center text-xl font-semibold whitespace-nowrap text-gray-800 dark:text-gray-200" to="/">
               Мой бюджет  
@@ -81,17 +81,23 @@ const Header = () => {
                   isOpen={isProfileMenuOpen}
                   onClose={() => setIsProfileMenuOpen(false)}
                   >
-                  <DropdownItem><Link to={"/api/editProfile"}>
+                  <DropdownItem>
+                    <Link className='flex' to={"/api/editProfile"}>
                       <OutlinePersonIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                      Профиль</Link>
+                      Профиль
+                    </Link>
                   </DropdownItem>
                   {/* <DropdownItem>
                       <OutlineCogIcon className="w-4 h-4 mr-3" aria-hidden="true" />
                       <Link to={"/api/settingProfile"}>Настройки</Link>
                   </DropdownItem> */}
                   <DropdownItem>
+                    <button className='flex' onClick={handleLogout}>
                       <OutlineLogoutIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                      <Link onClick={handleLogout}>Выход</Link>
+                      Выход
+                    </button>
+                      
+                      {/* <Link onClick={handleLogout}></Link> */}
                   </DropdownItem>
                 </Dropdown>
               </li>

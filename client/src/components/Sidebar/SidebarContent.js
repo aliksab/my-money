@@ -47,7 +47,7 @@ function SidebarContent() {
                 to={route.path}
                 className={({isActive}) => (isActive ? baseStyle + activeStyle : baseStyle)}
               >              
-                <Icon className="w-5 h-5" aria-hidden="true" icon={route.icon} />
+                <Icon className="w-7 h-7 md:w-5 md:h-5" aria-hidden="true" icon={route.icon} />
                 <span className="ml-4 hidden md:block">{route.name}</span>
               </NavLink>
             </li>

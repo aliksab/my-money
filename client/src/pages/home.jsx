@@ -28,8 +28,8 @@ const Home = () => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
     return (
-        <div className="flex">
-            <div className="w-80">
+        <div className="flex flex-col md:flex-row">
+            <div className="w-80 m-auto">
                 <div className="flex flex-col">
                     <InfoCard title="Общий баланс" value={`${balance.toLocaleString('ru')} ₽`}>
                         <RoundIcon

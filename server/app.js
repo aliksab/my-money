@@ -20,12 +20,13 @@ const bot = new TelegramApi(tgToken, { polling: true })
 
 const PORT = config.get('port') ?? 8080
 
-if (process.env.NPDE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client')))
 
     const indexPath = path.join(__dirname, 'client', 'index.html')
 
     app.get('*', (req, res) => {
+        console.log(res);
         res.sendFile(indexPath)
     })
 }
