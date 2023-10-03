@@ -135,19 +135,16 @@ const EditUserPage = () => {
         <>
             {!loading ? <form className="block" onSubmit={handleSubmit}>
                 <PageTitle>Мой аккаунт</PageTitle>
-                <div className="flex">
-                    <div className="w-1/4 m-auto flex flex-col items-center cursor-pointer dark:text-gray-400 focus:outline-none dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
-                    {/* <img className="rounded" src={data.image} value={data.image}/> */}
-                    <button value={data.image} placeholder={data.image}>
-                        {/* <img className="rounded" src={data.image} />s */}
-                        <label for="user_avatar" value={data.image}><img className="rounded" src={data.image} /></label>
-                        <Button>Изменить фото профиля</Button>
+                <div className="w-full flex content-around justify-around align-center h-fit">
+                    <div className="w-1/4 flex flex-col items-center my-auto cursor-pointer dark:text-gray-400 focus:outline-none dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
+                        <label for="user_avatar" value={data.image}>
+                            <img className="rounded " src={data.image} />
+                        </label>
+                        <Button><input type="file" className="block absolute top-0 left-0 opacity-0 pointer w-full h-full" id="user_avatar" onChange={handleChangeFile} name={data.image}/>Изменить фото профиля</Button>
 
-                        {/* <input type="file" className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" onChange={handleChangeFile} name={data.image}/> */}
-                    </button>
-                    <Button toggleButton={stopButton}>Подключить telegram</Button>
+                    <Button toggleButton={stopButton}><Link to='https://t.me/MyMoneySabBot'>Подключить telegram</Link></Button>
                     </div>
-                    <div className="mx-4 w-full">
+                    <div className="mx-4 w-2/4">
                     <div className="flex flex-col justify-between gap-2 h-fit">
                             <TextInput type="text" placeholder={data.lastName} label={"Фамилия"} name="lastName" value={data.lastName} onChange={handleChange} error={errors.lastName} />
                             <TextInput type="text" placeholder={data.firstName} label={"Имя"} name="firstName" value={data.firstName} onChange={handleChange} error={errors.firstName} />

@@ -14,11 +14,6 @@ const AppLoader = ({ children }) => {
         dispatch(loadUsersList());
     };
    }, [isLoggedIn]);
-   const userId = getUserID()
-   useEffect(() => {
-       dispatch(loadInvoicesList(userId));
-       dispatch(loadInvoiceManipulationList(userId));
-   }, [userId])
 
    const invoicesStatusLoading = useSelector(getInvoicesLoadingStatus())
 

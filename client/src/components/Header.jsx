@@ -81,9 +81,9 @@ const Header = () => {
                   isOpen={isProfileMenuOpen}
                   onClose={() => setIsProfileMenuOpen(false)}
                   >
-                  <DropdownItem>
+                  <DropdownItem><Link to={"/api/editProfile"}>
                       <OutlinePersonIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                      <Link to={"/api/editProfile"}>Профиль</Link>
+                      Профиль</Link>
                   </DropdownItem>
                   {/* <DropdownItem>
                       <OutlineCogIcon className="w-4 h-4 mr-3" aria-hidden="true" />

@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const config = require('config')
 const chalk = require('chalk')
 const cors = require('cors')
+const path = require('path')
 const routes = require('./routes')
 const  TelegramApi = require('node-telegram-bot-api')
 const app = express()
@@ -18,6 +19,16 @@ const tgToken = config.get('tgApiToken')
 const bot = new TelegramApi(tgToken, { polling: true })
 
 const PORT = config.get('port') ?? 8080
+
+if (process.env.NPDE_ENV === 'production') {
+    app.use('/', express.static(path.join(__dirname, 'client')))
+
+    const indexPath = path.join(__dirname, 'client', 'index.html')
+
+    app.get('*', (req, res) => {
+        res.sendFile(indexPath)
+    })
+}
 
 async function start() {
     try {
@@ -47,7 +58,12 @@ const commands = [
 bot.setMyCommands(commands);
 
 bot.on('message', async msg => {
+    const text = msg.text;
+    const chatId = msg.chat.id;
     try {
+        if (text === '/start') {
+            return bot.sendMessage(chatId, 'Добро пожаловать в телеграмм бота Вашего личного помощника my-money')
+        }
         bot.sendMessage(msg.chat.id, `Меню бота`, {
             reply_markup: {
                 //Добавляем пользователю меню-клавиатуру
@@ -60,21 +76,21 @@ bot.on('message', async msg => {
                 resize_keyboard: true
             }
         })
-        if(msg.text == '❌ Закрыть меню') {
-            await bot.sendMessage(msg.chat.id, 'Меню закрыто', {
+        if (text == '❌ Закрыть меню') {
+            return bot.sendMessage(chatId, 'Меню закрыто', {
                 reply_markup: {
                     remove_keyboard: true
                 }
             })
         }
-        if(msg.text == '💰 Мои счета') {
-            // await bot.sendMessage(msg.chat.id, 'Мои счета', {
-            //     reply_markup: {
-            //         remove_keyboard: true
-            //     }
-            // })
-            await bot.sendMessage(msg.chat.id, 'Мои счета')
+        if (text == '💰 Мои счета') {
+            await bot.sendMessage(chatId, 'Мои счета')
         }
+
+
+
+
+        return bot.sendMessage(chatId, 'I don`t now')
     } catch (error) {
         console.log(error);
     }

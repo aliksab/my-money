@@ -4,6 +4,10 @@ import userService from "../services/user.service";
 import { toast } from "react-toastify";
 import localStorageService, { setTokens } from "../services/localStorage.service";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUserId } from "../store/users";
+import { loadInvoicesList } from "../store/invoices";
+import { loadInvoiceManipulationList } from "../store/invoiceManipulation";
+import { useDispatch, useSelector } from "react-redux";
 
 export const httpAuth = axios.create();
 const AuthContext = React.createContext();
@@ -17,6 +21,9 @@ const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    // const userId = useSelector(getCurrentUserId())
+    // console.log(userId);
 
     async function signUp({ email, password, ...rest }) {
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`;
@@ -89,6 +96,9 @@ const AuthProvider = ({ children }) => {
         try {
             const { content } = await userService.get();
             setCurrentUser(content);
+            console.log(content);
+            await dispatch(loadInvoicesList(content._id));
+            await dispatch(loadInvoiceManipulationList(content._id));
         } catch (error) {
             errorCatcher(error);
         } finally {
