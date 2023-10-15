@@ -32,7 +32,7 @@ const EditUserPage = () => {
         console.log(data);
     };
     const handleChangeFile = async (e) => {
-        console.log(e.target.files[0].name);
+        console.log(e.target.files[0]);
         // try {
         //     const formData = new FormData();
         //     const file = e.target.files[0];
@@ -142,7 +142,7 @@ const EditUserPage = () => {
                         </label>
                         <Button><input type="file" className="block absolute top-0 left-0 opacity-0 pointer w-full h-full" id="user_avatar" onChange={handleChangeFile} name={data.image}/>Изменить фото профиля</Button>
 
-                    <Button toggleButton={stopButton}><Link to='https://t.me/MyMoneySabBot'>Подключить telegram</Link></Button>
+                    <Button toggleButton={stopButton}><Link to={`https://t.me/aliksab_test_bot?start=${data._id}`}>Подключить telegram</Link></Button>
                     </div>
                     <div className="mx-4 w-2/4">
                     <div className="flex flex-col justify-between gap-2 h-fit">

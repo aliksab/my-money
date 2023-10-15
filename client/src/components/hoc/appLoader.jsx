@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getUserID } from "../../services/localStorage.service";
 import { loadInvoiceManipulationList } from "../../store/invoiceManipulation";
 import { getInvoices, getInvoicesLoadingStatus, loadInvoicesList } from "../../store/invoices";
+import MainSkeleton from "../skeleton/MainSkeleton";
 
 const AppLoader = ({ children }) => {
    const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const AppLoader = ({ children }) => {
    const invoicesStatusLoading = useSelector(getInvoicesLoadingStatus())
 
    
-   if (usersStatusLoading && invoicesStatusLoading) return "Loading";
+   if (usersStatusLoading && invoicesStatusLoading) return <MainSkeleton/>;
     return children;
 };
 

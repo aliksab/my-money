@@ -52,8 +52,13 @@ const LoginForm = () => {
         // if (!isValid) return;
         const redirect = navigate('/api')
         
-        dispatch(login({ payload: data }));
-        navigate('/', { replace: true });
+        dispatch(login({ payload: data, redirect }));
+        // try {
+        //     navigate('/api', { replace: true });
+        // } catch (error) {
+        //     console.log(error);
+        // }
+        
     };
     return (
         <form onSubmit={handleSubmit}>

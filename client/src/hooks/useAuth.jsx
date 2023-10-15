@@ -8,6 +8,7 @@ import { getCurrentUserId } from "../store/users";
 import { loadInvoicesList } from "../store/invoices";
 import { loadInvoiceManipulationList } from "../store/invoiceManipulation";
 import { useDispatch, useSelector } from "react-redux";
+import MainSkeleton from "../components/skeleton/MainSkeleton";
 
 export const httpAuth = axios.create();
 const AuthContext = React.createContext();
@@ -125,7 +126,7 @@ const AuthProvider = ({ children }) => {
     }
     return (
         <AuthContext.Provider value={{ signUp, signIn, currentUser, logout, updateUser }}>
-            {!isLoading ? children : "Loading..."}
+            {!isLoading ? children : <MainSkeleton/>}
         </AuthContext.Provider>
     );
 };

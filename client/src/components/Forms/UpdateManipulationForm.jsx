@@ -27,6 +27,8 @@ const UpdateManipulationForm = ({manipulationId}) => {
     const profit = invoiceManipulationProfit.map((manipulation) => ({ label: manipulation.label, value: manipulation.name }))
     const expense = invoiceManipulationExpense.map((manipulation) => ({ label: manipulation.label, value: manipulation.name }))
 
+    console.log(updatedManipulation[0].amount);
+
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
@@ -65,11 +67,11 @@ const UpdateManipulationForm = ({manipulationId}) => {
     //     return Object.keys(errors).length === 0;
     // };
     const updateInvoice = (amount) => {
-        let newAmount = updatedInvoice[0].amount
+        let newAmount = updatedInvoice[0].amount - updatedManipulation[0].amount
         data.type === 'profit' ? newAmount += Number(amount) : newAmount -= Number(amount)
         const newData = { ...updatedInvoice[0], amount: newAmount }
         dispatch(updateInvoices(newData))
-        dispatch(getInvoices())
+        // dispatch(getInvoices())
     }
     const handleSubmit = (e) => {
         e.preventDefault();

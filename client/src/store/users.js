@@ -72,8 +72,8 @@ export const login = ({ payload, redirect }) => async dispatch => {
     dispatch(authRequested());
     try {
         const data = await authService.login({ email, password });
-        dispatch(authRequestSuccess({ userId: data.localId }));
-        localStorageService.setTokens(data);
+        await dispatch(authRequestSuccess({ userId: data.localId }));
+        await localStorageService.setTokens(data);
         history.push(redirect);
     } catch (error) {
         const { code, message } = error.response.data.error;

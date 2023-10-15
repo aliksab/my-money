@@ -16,7 +16,7 @@ const Login = () => {
         <div className="flex justify-around overflow-y-auto md:flex-row">
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full text-gray-700 dark:text-gray-200">
-              {formType === "register" ? <><PageTitle>Регистрация</PageTitle><RegisterForm /><p>Уже есть аккаунт? <Link role="button" onClick={toggleFormType} to={`auth/login`}>Вход</Link></p></> : <><PageTitle>Авторизация</PageTitle><LoginForm /><p>Первый раз? <Link role="button" onClick={toggleFormType} to={`auth/register`}>Регистрация</Link></p></>}
+              {formType === "register" ? <><PageTitle>Регистрация</PageTitle><RegisterForm /><div className='flex justify-between'><p>Уже есть аккаунт?</p> <p><Link role="button" className='tracking-widest  text-gray-900 underline dark:text-white decoration-indigo-500' onClick={toggleFormType} to={`auth/login`}>Вход</Link></p></div></> : <><PageTitle>Авторизация</PageTitle><LoginForm /><div className='flex justify-between'><p>Первый раз?</p><p><Link role="button" className='tracking-widest  text-gray-900 underline dark:text-white decoration-indigo-500' onClick={toggleFormType} to={`auth/register`}>Регистрация</Link></p></div></>}
             </div>
           </main>
         </div>
