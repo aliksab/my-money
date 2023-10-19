@@ -68,7 +68,6 @@ bot.on('message', async msg => {
     user = user.filter(user => user.userName == msg.from.id)
     let userId = ''
     user.map(u => userId = u._id)
-    console.log('userId', userId);
     try {
         if (text.split(' ')[0] === '/start') {   
             if (text.split(' ')[1]) {
@@ -83,6 +82,10 @@ bot.on('message', async msg => {
                 await bot.sendMessage(chatId, 'Добро пожаловать в телеграмм бота Вашего личного помощника my-money')
                 return userId
             }
+        }
+
+        if (text == '/help') {
+            return bot.sendMessage(chatId, 'Оставьте Ваше обращение в боте обратной связи @MyMoney_Error_bot')
         }
         
         bot.sendMessage(chatId, `Меню бота`, {
@@ -100,7 +103,7 @@ bot.on('message', async msg => {
         
         if (text == '💸 Добавить новую транзакцию') {
             const list = await Invoice.find()
-            const result = list.filter(invoice => invoice.userId == userId)
+            const result = list.filter(invoice => invoice.userId == String(userId))
 
             result.map(invoice => (
                 bot.sendMessage(chatId, invoice.name + ' Сумма средств ' + invoice.amount, {
@@ -113,10 +116,8 @@ bot.on('message', async msg => {
             ))
         }
         if (text == '📃 Список транзакций') {
-            console.log('userId', typeof(userId));
             const list = await InvoiceManipulation.find()
-            const result = list.filter(manipulation => manipulation.userId === userId)
-            console.log('result', result);
+            const result = list.filter(manipulation => manipulation.userId == String(userId))
             result.map(manipulation => {
                 bot.sendMessage(chatId, (manipulation.type === 'expense' ? 'Расход' : 'Доход') + `\n<b>Сумма средств:</b> ` + manipulation.amount, {
                     parse_mode: "HTML"
@@ -137,9 +138,12 @@ bot.on('message', async msg => {
 })
 bot.on('callback_query', async ctx => {
     const chatId = ctx.message.chat.id;
-    const userId = '650c65b4e6cf353997b3af20'
+    let user = await User.find()
+    user = user.filter(user => user.userName == ctx.from.id)
+    let userId = ''
+    user.map(u => userId = u._id)
     try {
-        let newTransaction = {type: '', invoiceId: ctx.data, amount: '', manipulation: 'other', description: '', userId: userId}
+        let newTransaction = {type: '', invoiceId: ctx.data, amount: '', manipulation: 'other', description: '', userId: String(userId)}
         bot.sendMessage(chatId, 'Введите данные транзакции. Пример: "Доход 1000 еда"') 
         await bot.on('message', async type => {
             const res = type.text.split(' ')
@@ -167,7 +171,7 @@ bot.on('callback_query', async ctx => {
             if (newTransaction.description != '') {
                 await InvoiceManipulation.create({...newTransaction})
                 try {
-                    console.log('Новая транзакция добавлена');
+                    bot.sendMessage(chatId, 'Новая транзакция добавлена');
                 } catch (error) {
                     console.log(error);
                 }

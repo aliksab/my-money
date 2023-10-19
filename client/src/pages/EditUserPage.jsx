@@ -86,12 +86,6 @@ const EditUserPage = () => {
                 value: 2
             }
         },
-        userName: {
-            min: {
-                message: "Имя должно содержать как минимум 2 символа",
-                value: 2
-            }
-        },
         descriptions: {
             min: {
                 message: "Описание должно содержать как минимум 10 символов",
@@ -138,7 +132,7 @@ const EditUserPage = () => {
                 <div className="w-full flex content-around justify-around align-center h-fit">
                     <div className="w-1/4 flex flex-col items-center my-auto cursor-pointer dark:text-gray-400 focus:outline-none dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
                         <label for="user_avatar" value={data.image}>
-                            <img className="rounded " src={data.image} />
+                            <img className="rounded" src={data.image} />
                         </label>
                         <Button><input type="file" className="block absolute top-0 left-0 opacity-0 pointer w-full h-full" id="user_avatar" onChange={handleChangeFile} name={data.image}/>Изменить фото профиля</Button>
 
@@ -150,7 +144,6 @@ const EditUserPage = () => {
                             <TextInput type="text" placeholder={data.firstName} label={"Имя"} name="firstName" value={data.firstName} onChange={handleChange} error={errors.firstName} />
                             <TextInput type="text" placeholder={data.secondName}  label={"Отчество"} name="secondName" value={data.secondName} onChange={handleChange} error={errors.secondName} />
                             <TextInput type="email" placeholder={data.email} label={"Email"} name="email" value={data.email} onChange={handleChange} error={errors.email} />
-                            <TextInput placeholder={data.userName}  type="text" label={"Логин"} name="userName" value={data.userName} onChange={handleChange} error={errors.userName} />
                         </div> 
                     </div>
                 </div>
