@@ -4,7 +4,7 @@ import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
 import history from "../utils/history";
 import { generateAuthError } from "../utils/generateAuthError";
-const initialState = localStorageService.getAccesToken()
+const initialState = localStorageService.getAccesToken() && (localStorageService.getUserID() != undefined)
     ? {
           entities: null,
           isLoading: true,

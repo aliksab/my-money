@@ -1,17 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-    getCurrentUserId,
     getIsLoggedIn,
     getUsersLoadingStatus,
     loadUsersList
 } from "../../store/users";
 import { useEffect } from "react";
-import { getUserID } from "../../services/localStorage.service";
-import { loadInvoiceManipulationList } from "../../store/invoiceManipulation";
 import {
-    getInvoices,
     getInvoicesLoadingStatus,
-    loadInvoicesList
 } from "../../store/invoices";
 import MainSkeleton from "../skeleton/MainSkeleton";
 
