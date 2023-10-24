@@ -14,11 +14,15 @@ http.interceptors.request.use(
         const refreshToken = localStorageService.getRefreshToken();
         if (configFile.isFireBase) {
             const containSlash = /\/$/.test(config.url);
-            config.url = (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
+            config.url =
+                (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
             if (refreshToken && expiresDate < Date.now()) {
                 const data = await authService.refresh();
                 localStorageService.setTokens({
-                    refreshToken: data.refresh_token, idToken: data.id_token, expiresIn: data.expires_in, localId: data.user_id
+                    refreshToken: data.refresh_token,
+                    idToken: data.id_token,
+                    expiresIn: data.expires_in,
+                    localId: data.user_id
                 });
             }
             const accessToken = localStorageService.getAccesToken();
@@ -29,12 +33,15 @@ http.interceptors.request.use(
             if (refreshToken && expiresDate < Date.now()) {
                 const data = await authService.refresh();
                 localStorageService.setTokens({
-                    refreshToken: data.refreshToken, idToken: data.accessToken, expiresIn: data.expiresIn, localId: data.userId
+                    refreshToken: data.refreshToken,
+                    idToken: data.accessToken,
+                    expiresIn: data.expiresIn,
+                    localId: data.userId
                 });
             }
             const accessToken = localStorageService.getAccesToken();
             if (accessToken) {
-                config.headers = { 
+                config.headers = {
                     ...config.headers,
                     Authorization: `Bearer ${accessToken}`
                 };
@@ -47,7 +54,9 @@ http.interceptors.request.use(
     }
 );
 function transformData(data) {
-    return data && !data._id ? Object.keys(data).map(key => ({ ...data[key] })) : data;
+    return data && !data._id
+        ? Object.keys(data).map((key) => ({ ...data[key] }))
+        : data;
 }
 http.interceptors.response.use(
     (res) => {
@@ -61,7 +70,6 @@ http.interceptors.response.use(
             error.response.status < 500;
 
         if (!expectedErrors) {
-
             toast.error("Somthing was wrong. Try it later");
         }
         return Promise.reject(error);

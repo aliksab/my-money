@@ -14,7 +14,7 @@ const LoginForm = () => {
         stayOn: false
     });
     const loginError = useSelector(getAuthError());
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const handleChange = (target) => {
@@ -50,21 +50,36 @@ const LoginForm = () => {
         e.preventDefault();
         // const isValid = validate();
         // if (!isValid) return;
-        const redirect = navigate('/api')
-        
+        const redirect = navigate("/api");
+
         dispatch(login({ payload: data, redirect }));
         // try {
         //     navigate('/api', { replace: true });
         // } catch (error) {
         //     console.log(error);
         // }
-        
     };
     return (
         <form onSubmit={handleSubmit}>
-            <TextInput type="email" placeholder="john@doe.com" label={"Email"} name="email" value={data.email} onChange={handleChange} error={errors.email} />
-            <TextInput placeholder="***************" type="password" label={"Пароль"} name="password" value={data.password} onChange={handleChange} error={errors.password} />
-            <CheckBoxField 
+            <TextInput
+                type="email"
+                placeholder="john@doe.com"
+                label={"Email"}
+                name="email"
+                value={data.email}
+                onChange={handleChange}
+                error={errors.email}
+            />
+            <TextInput
+                placeholder="***************"
+                type="password"
+                label={"Пароль"}
+                name="password"
+                value={data.password}
+                onChange={handleChange}
+                error={errors.password}
+            />
+            <CheckBoxField
                 value={data.licence}
                 onChange={handleChange}
                 name="licence"
@@ -75,6 +90,6 @@ const LoginForm = () => {
             <Button>Вход</Button>
         </form>
     );
-}
- 
+};
+
 export default LoginForm;

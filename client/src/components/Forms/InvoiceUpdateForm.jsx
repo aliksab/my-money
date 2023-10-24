@@ -6,10 +6,12 @@ import { validator } from "../../utils/validator";
 import Button from "../Button";
 import { getInvoices, updateInvoices } from "../../store/invoices";
 
-const InvoiceUpdateForm = ({invoiceId}) => {
+const InvoiceUpdateForm = ({ invoiceId }) => {
     const dispatch = useDispatch();
-    const InvoiceList = useSelector(getInvoices())
-    const updatedInvoice = InvoiceList.filter(invoice => invoice._id === invoiceId)
+    const InvoiceList = useSelector(getInvoices());
+    const updatedInvoice = InvoiceList.filter(
+        (invoice) => invoice._id === invoiceId
+    );
     const [data, setData] = useState(updatedInvoice[0]);
     const [errors, SetErrors] = useState({});
     const handleChange = (target) => {
@@ -24,7 +26,7 @@ const InvoiceUpdateForm = ({invoiceId}) => {
                 message: "Название должно содержать как минимум 3 символа",
                 value: 3
             }
-        },
+        }
     };
     useEffect(() => {
         validate();
@@ -40,17 +42,24 @@ const InvoiceUpdateForm = ({invoiceId}) => {
         if (!isValid) return;
         const newData = { ...data };
         dispatch(updateInvoices(newData));
-    }
+    };
     return (
-        <>  
+        <>
             <form onSubmit={handleSubmit}>
                 <PageTitle>Внести изменения</PageTitle>
-                <TextInput type="text" placeholder={data.name} label={"Имя счёта"} name="name" value={data.name} onChange={handleChange} error={errors.name} />
+                <TextInput
+                    type="text"
+                    placeholder={data.name}
+                    label={"Имя счёта"}
+                    name="name"
+                    value={data.name}
+                    onChange={handleChange}
+                    error={errors.name}
+                />
                 <Button>Сохранить</Button>
             </form>
         </>
-        
     );
-}
- 
+};
+
 export default InvoiceUpdateForm;

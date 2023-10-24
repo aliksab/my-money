@@ -16,8 +16,11 @@ const invoiceService = {
         return data;
     },
     update: async (payload) => {
-        const { data } = await httpService.patch(invoiceEndpoint + payload._id, payload);
-        return data; 
+        const { data } = await httpService.patch(
+            invoiceEndpoint + payload._id,
+            payload
+        );
+        return data;
     }
 };
 

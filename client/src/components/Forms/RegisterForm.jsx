@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const RegisterForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [data, setData] = useState({ });
+    const [data, setData] = useState({});
     const [errors, SetErrors] = useState({});
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
@@ -38,7 +38,8 @@ const RegisterForm = () => {
                 message: "Пароль обязателен для заполнения"
             },
             isCapitalSymbol: {
-                message: "Пароль должен содержать как минимум одну заглавную букву"
+                message:
+                    "Пароль должен содержать как минимум одну заглавную букву"
             },
             isContainDigit: {
                 message: "Пароль должен содержать как минимум одну цифру"
@@ -50,7 +51,8 @@ const RegisterForm = () => {
         },
         licence: {
             isRequired: {
-                message: "Вы не можете использовать сервис без лицензионного соглашения"
+                message:
+                    "Вы не можете использовать сервис без лицензионного соглашения"
             }
         }
     };
@@ -69,15 +71,31 @@ const RegisterForm = () => {
         if (!isValid) return;
         const newData = { ...data };
         dispatch(signUp(newData));
-        navigate('/home')
+        navigate("/home");
         console.log(data);
-    }
+    };
     return (
         <form onSubmit={handleSubmit}>
-            <TextInput type="email" placeholder="john@doe.com" label={"Email"} name="email" value={data.email} onChange={handleChange} error={errors.email} />
-            <TextInput placeholder="***************" type="password" label={"Пароль"} name="password" value={data.password} onChange={handleChange} error={errors.password} />
+            <TextInput
+                type="email"
+                placeholder="john@doe.com"
+                label={"Email"}
+                name="email"
+                value={data.email}
+                onChange={handleChange}
+                error={errors.email}
+            />
+            <TextInput
+                placeholder="***************"
+                type="password"
+                label={"Пароль"}
+                name="password"
+                value={data.password}
+                onChange={handleChange}
+                error={errors.password}
+            />
 
-            <CheckBoxField 
+            <CheckBoxField
                 value={data.licence}
                 onChange={handleChange}
                 name="licence"
@@ -87,6 +105,6 @@ const RegisterForm = () => {
             <Button>Зарегистрироваться</Button>
         </form>
     );
-}
- 
+};
+
 export default RegisterForm;

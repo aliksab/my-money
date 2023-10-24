@@ -10,12 +10,10 @@ import EditUserPage from "./pages/EditUserPage";
 import SettingProfile from "./pages/SettingProfile";
 import Container from "./containers/Container";
 
-
-
 const routes = (isLoggedIn, location) => [
     {
         path: "",
-        element: <MainPage />,
+        element: <MainPage />
     },
     {
         path: "auth",
@@ -23,37 +21,37 @@ const routes = (isLoggedIn, location) => [
         children: [
             {
                 path: "login",
-                element: <LoginForm />,
+                element: <LoginForm />
             },
             {
                 path: "register",
-                element: <RegisterForm />,
+                element: <RegisterForm />
             },
             {
                 path: "*",
-                element: <Navigate to='/auth/register' />,
-            },
-        ],
+                element: <Navigate to="/auth/register" />
+            }
+        ]
     },
     {
         path: "api",
         element: isLoggedIn ? (
             <Container />
         ) : (
-            <Navigate to='/auth/login' state={{ referrer: location }} />
+            <Navigate to="/auth/login" state={{ referrer: location }} />
         ),
         children: [
-            { path: "", element: <Home />},
+            { path: "", element: <Home /> },
             { path: "logbook", element: <Logbook /> },
             { path: "trading", element: <TradingViewWidget /> },
             { path: "editProfile", element: <EditUserPage /> },
-            { path: "settingProfile", element: <SettingProfile /> },            
-        ],
+            { path: "planer", element: <SettingProfile /> }
+        ]
     },
     {
         path: "*",
-        element: <Navigate to={isLoggedIn ? "/api" : "/"} />,
-    },
+        element: <Navigate to={isLoggedIn ? "/api" : "/"} />
+    }
 ];
 
 export default routes;

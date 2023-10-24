@@ -3,7 +3,6 @@ import usersReducer from "./users";
 import invoicesReducer from "./invoices";
 import invoiceManipulationsReducer from "./invoiceManipulation";
 
-
 const rootReducer = combineReducers({
     users: usersReducer,
     invoices: invoicesReducer,

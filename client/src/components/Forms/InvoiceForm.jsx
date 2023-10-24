@@ -10,9 +10,12 @@ import { createInvoices } from "../../store/invoices";
 
 const InvoiceForm = () => {
     const dispatch = useDispatch();
-    const [data, setData] = useState({ });
+    const [data, setData] = useState({});
     const [errors, SetErrors] = useState({});
-    const invoiceList = invoiceTypes.map((invoice) => ({ label: invoice.label, value: invoice.name }));
+    const invoiceList = invoiceTypes.map((invoice) => ({
+        label: invoice.label,
+        value: invoice.name
+    }));
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
@@ -42,7 +45,7 @@ const InvoiceForm = () => {
             isRequired: {
                 message: "Обязательно выберите тип счёта"
             }
-        },
+        }
     };
     useEffect(() => {
         validate();
@@ -58,19 +61,42 @@ const InvoiceForm = () => {
         if (!isValid) return;
         const newData = { ...data };
         dispatch(createInvoices(newData));
-    }
+    };
     return (
-        <>  
+        <>
             <form onSubmit={handleSubmit}>
                 <PageTitle>Новый счёт</PageTitle>
-                <SelectField label="Выбери счёт" name="invoice" defaultOption="Выберите.." options={invoiceList} onChange={handleChange} value={data.invoice} error={errors.invoice} />
-                <TextInput type="text" placeholder="BankOfRussian" label={"Имя счёта"} name="name" value={data.name} onChange={handleChange} error={errors.name} />
-                <TextInput type="number" placeholder="100000" label={"Сумма"} name="amount" value={data.amount} onChange={handleChange} error={errors.amount} />
+                <SelectField
+                    label="Выбери счёт"
+                    name="invoice"
+                    defaultOption="Выберите.."
+                    options={invoiceList}
+                    onChange={handleChange}
+                    value={data.invoice}
+                    error={errors.invoice}
+                />
+                <TextInput
+                    type="text"
+                    placeholder="BankOfRussian"
+                    label={"Имя счёта"}
+                    name="name"
+                    value={data.name}
+                    onChange={handleChange}
+                    error={errors.name}
+                />
+                <TextInput
+                    type="number"
+                    placeholder="100000"
+                    label={"Сумма"}
+                    name="amount"
+                    value={data.amount}
+                    onChange={handleChange}
+                    error={errors.amount}
+                />
                 <Button>Создать счёт</Button>
             </form>
         </>
-        
     );
-}
- 
+};
+
 export default InvoiceForm;

@@ -9,15 +9,24 @@ const userService = {
         return data;
     },
     create: async (payload) => {
-        const { data } = await httpService.put(userEndpoint + payload._id, payload);
+        const { data } = await httpService.put(
+            userEndpoint + payload._id,
+            payload
+        );
         return data;
     },
     update: async (payload) => {
-        const { data } = await httpService.patch(userEndpoint + localStorageService.getUserID(), payload);
+        const { data } = await httpService.patch(
+            userEndpoint + localStorageService.getUserID(),
+            payload
+        );
         return data;
     },
     post: async (payload) => {
-        const { data } = await httpService.post(userEndpoint + 'upload', payload);
+        const { data } = await httpService.post(
+            userEndpoint + "upload",
+            payload
+        );
         return data;
     }
 };

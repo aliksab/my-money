@@ -1,10 +1,14 @@
+import PageTitle from "../components/PageTitle";
+
 const SettingProfile = () => {
     return (
         <>
-            <h1>SettingProfile</h1>
+            <PageTitle>Календарь</PageTitle>
+            <div className="w-full flex justify-around">
+                <PageTitle>УПС.. Данная опция ещё не работает</PageTitle>
+            </div>
         </>
-        
     );
-}
- 
+};
+
 export default SettingProfile;

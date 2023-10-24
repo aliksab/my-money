@@ -39,20 +39,24 @@ export const InvoicesProvider = ({ children }) => {
         } finally {
             setLoading(false);
         }
-    };
+    }
     async function removeInvoice(id) {
         try {
             const { content } = await invoiceService.removeInvoice(id);
             if (content === null) {
-                setInvoices(prev => prev.filter(invoice => invoice._id !== id));
+                setInvoices((prev) =>
+                    prev.filter((invoice) => invoice._id !== id)
+                );
             }
         } catch (error) {
             errorCatcher(error);
         }
     }
     return (
-        <InvoicesContext.Provider value={ { invoices, isLoading, removeInvoice } }>
-           {children}
+        <InvoicesContext.Provider
+            value={{ invoices, isLoading, removeInvoice }}
+        >
+            {children}
         </InvoicesContext.Provider>
     );
 };

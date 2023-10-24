@@ -3,28 +3,38 @@ import Invoice from "./Invoice";
 import Pagination from "./pagination";
 
 const InvoiceList = ({ invoices }) => {
-    const [pageTable, setPageTable] = useState(1)
-    const response = invoices.concat([])
-    const [dataTable, setDataTable] = useState([])
+    const [pageTable, setPageTable] = useState(1);
+    const response = invoices.concat([]);
+    const [dataTable, setDataTable] = useState([]);
     function onPageChangeTable(p) {
-        setPageTable(p)
+        setPageTable(p);
     }
     useEffect(() => {
-        setDataTable(response.slice((pageTable - 1) * resultsPerPage, pageTable * resultsPerPage))
-      }, [pageTable])
+        setDataTable(
+            response.slice(
+                (pageTable - 1) * resultsPerPage,
+                pageTable * resultsPerPage
+            )
+        );
+    }, [pageTable]);
     useEffect(() => {
-        if ((invoices.length - 1) <= (pageTable - 1) * resultsPerPage) {
+        if (invoices.length - 1 <= (pageTable - 1) * resultsPerPage) {
             setPageTable(pageTable - 1);
-        };
-    }, [invoices])
-    const resultsPerPage = 3
-    const totalResults = invoices.length
+        }
+    }, [invoices]);
+    const resultsPerPage = 3;
+    const totalResults = invoices.length;
     return (
         <>
-            {dataTable.map(invoice => (
-                <Invoice key={invoice._id} invoiceId={invoice._id} name={invoice.name} amount={invoice.amount} />
+            {dataTable.map((invoice) => (
+                <Invoice
+                    key={invoice._id}
+                    invoiceId={invoice._id}
+                    name={invoice.name}
+                    amount={invoice.amount}
+                />
             ))}
-            <div className='flex justify-center'>
+            <div className="flex justify-center">
                 <Pagination
                     itemCount={totalResults}
                     pageSize={resultsPerPage}
@@ -33,7 +43,7 @@ const InvoiceList = ({ invoices }) => {
                 />
             </div>
         </>
-    )
-}
- 
+    );
+};
+
 export default InvoiceList;

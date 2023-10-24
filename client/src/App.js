@@ -8,22 +8,20 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  const isLoggedIn = useSelector(getIsLoggedIn());
-  const location = useLocation();
-  const elements = useRoutes(routes(isLoggedIn, location));
-  return (
-    <>
-    <AppLoader>
-      <AuthProvider>
-        <Header/>
-          {elements}
-      </AuthProvider>
-    </AppLoader>
-    <ToastContainer />
-    </>
-    
-    
-  );
+    const isLoggedIn = useSelector(getIsLoggedIn());
+    const location = useLocation();
+    const elements = useRoutes(routes(isLoggedIn, location));
+    return (
+        <>
+            <AppLoader>
+                <AuthProvider>
+                    <Header />
+                    {elements}
+                </AuthProvider>
+            </AppLoader>
+            <ToastContainer />
+        </>
+    );
 }
 
 export default App;

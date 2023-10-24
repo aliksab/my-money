@@ -32,7 +32,7 @@ function isOutDated(date) {
         return true;
     }
     return false;
-};
+}
 export const loadQualitiesList = () => async (dispatch, getState) => {
     const { lastFetch } = getState().qualities;
     if (isOutDated(lastFetch)) {
@@ -46,8 +46,9 @@ export const loadQualitiesList = () => async (dispatch, getState) => {
     }
 };
 export const getQuality = () => (state) => state.qualities.entities;
-export const getQualitiesLoadingStatus = () => (state) => state.qualities.isLoading;
-export const getQualitiesByIds = (qualitiesIds) => state => {
+export const getQualitiesLoadingStatus = () => (state) =>
+    state.qualities.isLoading;
+export const getQualitiesByIds = (qualitiesIds) => (state) => {
     if (state.qualities.entities) {
         const qualitiesArray = [];
         for (const qualId of qualitiesIds) {

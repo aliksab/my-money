@@ -25,13 +25,14 @@ const professionsSlice = createSlice({
     }
 });
 const { reducer: professionsReducer, actions } = professionsSlice;
-const { professionsRequested, professionsReceved, professionsRequesFiled } = actions;
+const { professionsRequested, professionsReceved, professionsRequesFiled } =
+    actions;
 function isOutDated(date) {
     if (Date.now() - date > 10 * 60 * 1000) {
         return true;
     }
     return false;
-};
+}
 export const loadProfessionsList = () => async (dispatch, getState) => {
     const { lastFetch } = getState().professions;
     if (isOutDated(lastFetch)) {
@@ -45,11 +46,14 @@ export const loadProfessionsList = () => async (dispatch, getState) => {
     }
 };
 export const getProfessions = () => (state) => state.professions.entities;
-export const getProfessionsLoadingStatus = () => (state) => state.professions.isLoading;
-export const getProfessionsByIds = (professionsIds) => state => {
-   if (state.professions.entities) {
-    return state.professions.entities.find(prof => prof._id === professionsIds);
-   } else return "loading..";
+export const getProfessionsLoadingStatus = () => (state) =>
+    state.professions.isLoading;
+export const getProfessionsByIds = (professionsIds) => (state) => {
+    if (state.professions.entities) {
+        return state.professions.entities.find(
+            (prof) => prof._id === professionsIds
+        );
+    } else return "loading..";
 };
 
 export default professionsReducer;

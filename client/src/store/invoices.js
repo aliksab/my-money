@@ -26,17 +26,26 @@ const invoiceSlice = createSlice({
             state.entities.push(action.payload);
         },
         invoicesDelete(state, action) {
-            state.entities = state.entities.filter(c => c._id !== action.payload);
+            state.entities = state.entities.filter(
+                (c) => c._id !== action.payload
+            );
         },
         invoicesUpdate: (state, action) => {
             state.entities[
-                state.entities.findIndex(i => i._id === action.payload._id)
+                state.entities.findIndex((i) => i._id === action.payload._id)
             ] = action.payload;
         }
     }
 });
 const { reducer: invoicesReducer, actions } = invoiceSlice;
-const { invoicesRequested, invoicesReceved, invoicesRequesFiled, invoicesCreate, invoicesDelete, invoicesUpdate } = actions;
+const {
+    invoicesRequested,
+    invoicesReceved,
+    invoicesRequesFiled,
+    invoicesCreate,
+    invoicesDelete,
+    invoicesUpdate
+} = actions;
 const newInvoicesRequested = createAction("invoice/newInvoicesRequested");
 const deleteInvoicesRequested = createAction("invoice/deleteInvoicesRequested");
 const invoiceUpdateRequested = createAction("invoice/invoiceUpdateRequested");
@@ -74,8 +83,8 @@ export const removeInvoices = (invoiceId) => async (dispatch) => {
         dispatch(invoicesRequesFiled(error.message));
     }
 };
-export const updateInvoices = payload => {
-    return async dispatch => {
+export const updateInvoices = (payload) => {
+    return async (dispatch) => {
         dispatch(invoiceUpdateRequested());
         try {
             const { content } = await invoiceService.update(payload);
@@ -87,6 +96,7 @@ export const updateInvoices = payload => {
     };
 };
 export const getInvoices = () => (state) => state.invoices.entities;
-export const getInvoicesLoadingStatus = () => (state) => state.invoices.isLoading;
+export const getInvoicesLoadingStatus = () => (state) =>
+    state.invoices.isLoading;
 
 export default invoicesReducer;
