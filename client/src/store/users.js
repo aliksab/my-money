@@ -4,7 +4,7 @@ import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
 import history from "../utils/history";
 import { generateAuthError } from "../utils/generateAuthError";
-const initialState = localStorageService.getAccesToken() && (localStorageService.getUserID() != undefined)
+const initialState = localStorageService.getAccesToken() && localStorageService.getUserID()
     ? {
           entities: null,
           isLoading: true,
@@ -78,7 +78,7 @@ const authRequested = createAction("users/authRequested");
 const userUpdateRequested = createAction("users/userUpdateRequested");
 const userUpdateFailed = createAction("users/userUpdateFailed");
 export const login =
-    ({ payload, redirect }) =>
+    ({ payload }) =>
     async (dispatch) => {
         const { email, password } = payload;
         dispatch(authRequested());
@@ -86,7 +86,7 @@ export const login =
             const data = await authService.login({ email, password });
             await dispatch(authRequestSuccess({ userId: data.localId }));
             await localStorageService.setTokens(data);
-            history.push(redirect);
+            
         } catch (error) {
             const { code, message } = error.response.data.error;
             if (code === 400) {

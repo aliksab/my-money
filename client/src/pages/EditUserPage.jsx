@@ -113,18 +113,6 @@ const EditUserPage = () => {
             console.log(error);
         }
     };
-    const stopButton = () => {
-        toast("🦄 Wow so easy!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light"
-        });
-    };
     return (
         <>
             {!loading ? (
@@ -190,13 +178,12 @@ const EditUserPage = () => {
                                 />
                             </div>
                             <div className="flex justify-between">
-                                <Button toggleButton={stopButton}>
-                                    <Link
-                                        to={`https://t.me/aliksab_test_bot?start=${data._id}`}
-                                    >
-                                        Перейти в Telegram
-                                    </Link>
-                                </Button>
+                                
+                                <Link
+                                    to={`https://t.me/aliksab_test_bot?start=${data._id}`}
+                                >
+                                    <Button>Перейти в Telegram</Button>
+                                </Link>
                                 <Button>Сохранить</Button>
                             </div>
                         </div>

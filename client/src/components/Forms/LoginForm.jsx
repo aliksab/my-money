@@ -8,11 +8,7 @@ import { getAuthError, login } from "../../store/users";
 import CheckBoxField from "../CheckField";
 
 const LoginForm = () => {
-    const [data, setData] = useState({
-        email: "",
-        password: "",
-        stayOn: false
-    });
+    const [data, setData] = useState({});
     const loginError = useSelector(getAuthError());
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -46,18 +42,12 @@ const LoginForm = () => {
     };
     const isValid = Object.keys(errors).length === 0;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // const isValid = validate();
-        // if (!isValid) return;
-        const redirect = navigate("/api");
-
-        dispatch(login({ payload: data, redirect }));
-        // try {
-        //     navigate('/api', { replace: true });
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        const isValid = validate();
+        if (!isValid) return;
+        await dispatch(login({ payload: data }));
+        await navigate('/api', { replace: true });
     };
     return (
         <form onSubmit={handleSubmit}>
@@ -86,7 +76,7 @@ const LoginForm = () => {
             >
                 Оставаться в системе
             </CheckBoxField>
-            {loginError && <p className="text-danger">{loginError}</p>}
+            {loginError && <p className="text-red-600">{loginError}</p>}
             <Button>Вход</Button>
         </form>
     );

@@ -4,10 +4,10 @@ export default function displayDate(data) {
     return date.toLocaleDateString("ru");
 }
 
-export function chartDate() {
+export function chartDate(optionDate) {
     const date = new Date();
     const dates = [];
-    for (let i = 0; i < 7; i += 1) {
+    for (let i = 0; i < optionDate; i += 1) {
         dates.push(date.toLocaleDateString("ru"));
         date.setDate(date.getDate() - 1);
     }

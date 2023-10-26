@@ -1,8 +1,8 @@
 import { chartDate } from "./displayDate";
 
-export function dateManipulation(manipulation, invoice) {
-    const dateManipulate = new Date().toLocaleDateString("ru");
-    const arrDate = chartDate();
+export function dateManipulation(manipulation, invoice, optionDate) {
+    // const dateManipulate = new Date().toLocaleDateString("ru");
+    const arrDate = chartDate(optionDate);
     let amount = Number(invoice.map((i) => i.amount));
     const manList = [];
     const arrChart = [];
