@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getCurrentUserData, updateUser } from "../store/users";
 import { validator } from "../utils/validator";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const EditUserPage = () => {
     const dispatch = useDispatch();
@@ -113,6 +111,9 @@ const EditUserPage = () => {
             console.log(error);
         }
     };
+    const handleTgBot = (id) => {
+        window.open(`https://t.me/MyMoneySabBot?start=${id}`);
+    };
     return (
         <>
             {!loading ? (
@@ -178,12 +179,9 @@ const EditUserPage = () => {
                                 />
                             </div>
                             <div className="flex justify-between">
-                                
-                                <Link
-                                    to={`https://t.me/aliksab_test_bot?start=${data._id}`}
-                                >
-                                    <Button>Перейти в Telegram</Button>
-                                </Link>
+                                <Button toggleButton={handleTgBot}>
+                                    Перейти в Telegram
+                                </Button>
                                 <Button>Сохранить</Button>
                             </div>
                         </div>

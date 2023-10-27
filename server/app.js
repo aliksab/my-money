@@ -160,6 +160,7 @@ bot.on("message", async (msg) => {
   }
 });
 bot.on("callback_query", async (ctx) => {
+  const updateInvoice = await Invoice.findById(ctx.data)
   const chatId = ctx.message.chat.id;
   let user = await User.find();
   user = user.filter((user) => user.userName == ctx.from.id);
@@ -187,7 +188,6 @@ bot.on("callback_query", async (ctx) => {
         newTransaction.type = "expense";
         res.shift();
       } else {
-        bot.sendMessage(chatId, "Неправильный тип операции");
         return;
       }
 
@@ -203,8 +203,18 @@ bot.on("callback_query", async (ctx) => {
 
       if (newTransaction.description != "") {
         await InvoiceManipulation.create({ ...newTransaction });
+        let newAmount = updateInvoice.amount;
+        newTransaction.type === "profit"
+            ? (newAmount += Number(newTransaction.amount))
+            : (newAmount -= Number(newTransaction.amount));
+        updateInvoice.amount = newAmount
+        await Invoice.findByIdAndUpdate(
+          newTransaction.invoiceId,
+          updateInvoice,
+          { new: true }
+        );
         try {
-          bot.sendMessage(chatId, "Новая транзакция добавлена");
+          return bot.sendMessage(chatId, "Новая транзакция добавлена");
         } catch (error) {
           console.log(error);
         }
