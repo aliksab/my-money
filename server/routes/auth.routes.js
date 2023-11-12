@@ -125,8 +125,8 @@ router.post("/token", async (req, res) => {
 
     res.status(200).send({ ...tokens, userId: data._id });
   } catch (e) {
-    res.status(500).json({
-      message: "На сервере произошла ошибкаю Попробуйте позже",
+    res.status().json({
+      message: "На сервере произошла ошибка Попробуйте позже",
     });
   }
 });
