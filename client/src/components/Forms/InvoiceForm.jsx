@@ -10,7 +10,7 @@ import { createInvoices } from "../../store/invoices";
 
 const InvoiceForm = () => {
     const dispatch = useDispatch();
-    const [data, setData] = useState({});
+    const [data, setData] = useState({name:"", amount: 0, invoice: "debit"});
     const [errors, SetErrors] = useState({});
     const invoiceList = invoiceTypes.map((invoice) => ({
         label: invoice.label,
@@ -30,12 +30,6 @@ const InvoiceForm = () => {
             }
         },
         amount: {
-            isRequired: {
-                message: "Обязательно для заполнения"
-            },
-            isContainDigit: {
-                message: "Пароль должен содержать как минимум одну цифру"
-            },
             min: {
                 message: "На счету должен быть хотя-бы ноль",
                 value: 1
@@ -57,8 +51,9 @@ const InvoiceForm = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (data.name === "") data.name="Новый счёт"
         const isValid = validate();
-        if (!isValid) return;
+        if (!isValid) return;        
         const newData = { ...data };
         dispatch(createInvoices(newData));
     };
@@ -86,7 +81,7 @@ const InvoiceForm = () => {
                 />
                 <TextInput
                     type="number"
-                    placeholder="100000"
+                    placeholder="0"
                     label={"Сумма"}
                     name="amount"
                     value={data.amount}

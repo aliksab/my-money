@@ -88,11 +88,7 @@ const Home = () => {
                     }
                 >
                     <Line {...dateManipulation(manipulationList, oneInvoice, optionDate)} />
-                    {/* {console.log(dateManipulation(manipulationList, oneInvoice))} */}
-                    
-                    { console.log(invoicesList)}
-
-                    
+                    {/* {console.log(dateManipulation(manipulationList, oneInvoice))} */}                    
                 </ChartCard>
             </div>
         </div>

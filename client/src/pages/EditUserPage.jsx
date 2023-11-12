@@ -28,10 +28,9 @@ const EditUserPage = () => {
 
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
-        console.log(data);
     };
     const handleChangeFile = async (e) => {
-        console.log(e.target.files[0]);
+        // console.log(e.target.files[0]);
         // try {
         //     const formData = new FormData();
         //     const file = e.target.files[0];

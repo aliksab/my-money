@@ -24,6 +24,7 @@ import MyModal from "../components/Modal";
 const Logbook = () => {
     const dispatch = useDispatch();
     const manipulation = useSelector(getInvoiceManipulations());
+
     const invoice = useSelector(getInvoices());
     const getInvoiceName = (invoiceId) => {
         const findName = invoice.filter((i) => i._id === invoiceId);

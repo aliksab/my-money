@@ -111,7 +111,7 @@ const AuthProvider = ({ children }) => {
         try {
             const { content } = await userService.get();
             setCurrentUser(content);
-            console.log(content);
+            // console.log(content);
             await dispatch(loadInvoicesList(content._id));
             await dispatch(loadInvoiceManipulationList(content._id));
         } catch (error) {

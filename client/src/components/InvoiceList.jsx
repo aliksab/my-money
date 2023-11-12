@@ -21,6 +21,7 @@ const InvoiceList = ({ invoices }) => {
         if (invoices.length - 1 <= (pageTable - 1) * resultsPerPage) {
             setPageTable(pageTable - 1);
         }
+        setDataTable(invoices)
     }, [invoices]);
     const resultsPerPage = 3;
     const totalResults = invoices.length;

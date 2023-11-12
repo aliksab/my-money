@@ -19,7 +19,7 @@ import Button from "../Button";
 import { createInvoiceManipulation } from "../../store/invoiceManipulation";
 
 const InvoiceManipulationForm = () => {
-    const [data, setData] = useState({});
+    const [data, setData] = useState({description: "", amount: 0});
     const [errors, SetErrors] = useState({});
     const dispatch = useDispatch();
     const isLoading = useSelector(getInvoicesLoadingStatus());
@@ -54,9 +54,6 @@ const InvoiceManipulationForm = () => {
             }
         },
         amount: {
-            isRequired: {
-                message: "Обязательно для заполнения"
-            },
             min: {
                 message: "Сумма должна содержать хотя-бы одну цифру",
                 value: 1
@@ -92,6 +89,7 @@ const InvoiceManipulationForm = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (data.description === "") data.description="Транзакция"
         const isValid = validate();
         if (!isValid) return;
         const newData = { ...data };

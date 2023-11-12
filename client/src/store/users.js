@@ -4,7 +4,7 @@ import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
 import history from "../utils/history";
 import { generateAuthError } from "../utils/generateAuthError";
-const initialState = localStorageService.getAccesToken() && localStorageService.getUserID()
+const initialState = localStorageService.getAccesToken()
     ? {
           entities: null,
           isLoading: true,
@@ -104,6 +104,7 @@ export const loadUsersList = () => async (dispatch, getState) => {
         dispatch(usersReceved(content));
     } catch (error) {
         dispatch(usersRequesFiled(error.message));
+        dispatch(userLoggedOut());
     }
 };
 export const getUserById = (userId) => (state) => {

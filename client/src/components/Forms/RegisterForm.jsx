@@ -72,7 +72,6 @@ const RegisterForm = () => {
         const newData = { ...data };
         dispatch(signUp(newData));
         navigate("/home");
-        console.log(data);
     };
     return (
         <form onSubmit={handleSubmit}>

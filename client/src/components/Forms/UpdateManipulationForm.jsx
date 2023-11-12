@@ -48,8 +48,6 @@ const UpdateManipulationForm = ({ manipulationId }) => {
         value: manipulation.name
     }));
 
-    console.log(updatedManipulation[0].amount);
-
     const handleChange = (target) => {
         setData((prev) => ({ ...prev, [target.name]: target.value }));
     };
@@ -60,9 +58,6 @@ const UpdateManipulationForm = ({ manipulationId }) => {
             }
         },
         amount: {
-            isRequired: {
-                message: "Обязательно для заполнения"
-            },
             min: {
                 message: "Сумма должна содержать хотя-бы одну цифру",
                 value: 1
@@ -79,14 +74,14 @@ const UpdateManipulationForm = ({ manipulationId }) => {
             }
         }
     };
-    // useEffect(() => {
-    //     validate();
-    // }, [data]);
-    // const validate = () => {
-    //     const errors = validator(data, validatorConfig);
-    //     SetErrors(errors);
-    //     return Object.keys(errors).length === 0;
-    // };
+    useEffect(() => {
+        validate();
+    }, [data]);
+    const validate = () => {
+        const errors = validator(data, validatorConfig);
+        SetErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
     const updateInvoice = (amount) => {
         let newAmount =
             updatedInvoice[0].amount - updatedManipulation[0].amount;
@@ -99,8 +94,8 @@ const UpdateManipulationForm = ({ manipulationId }) => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const isValid = validate();
-        // if (!isValid) return;
+        const isValid = validate();
+        if (!isValid) return;
         updateInvoice(data.amount);
         const newData = { ...data };
         dispatch(updateInvoiceManipulation(newData));
